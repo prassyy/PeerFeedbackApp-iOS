@@ -66,3 +66,8 @@ fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots/**/*.png
 fastlane/test_output
+
+# Test and real time data used by the app
+
+**/questions.plist
+**/peerNames.plist
