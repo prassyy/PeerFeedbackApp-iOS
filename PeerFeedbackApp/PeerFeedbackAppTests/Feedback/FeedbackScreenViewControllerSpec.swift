@@ -7,26 +7,22 @@
 //
 
 import XCTest
+import UIKit
 
 @testable import PeerFeedbackApp
 
 class FeedbackScreenViewControllerSpec: XCTestCase {
     
     let subject: FeedbackScreenViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FeedbackScreenViewController") as! FeedbackScreenViewController
-    
+
     override func setUp() {
+        UIApplication.shared.keyWindow?.rootViewController = subject
         _ = subject.view
     }
 
     func test_containsTableView() {
         let tableView = subject.view.getViewsOfType(UITableView.self).first
         XCTAssertNotNil(tableView)
-    }
-    
-    func test_containsPickerViewAndMustBeHidden() {
-        let pickerView = subject.view.getViewsOfType(UIPickerView.self).first
-        XCTAssertNotNil(pickerView)
-        XCTAssert(pickerView!.isHidden)
     }
     
     func test_tableViewContainsHeaderWithAppName() {
@@ -40,24 +36,34 @@ class FeedbackScreenViewControllerSpec: XCTestCase {
         XCTAssertNotNil(titleLabel)
     }
     
-    func test_tableViewContainsCellToChooseDeveloper() {
+    func test_tableViewContainsCellToFilterRole() {
         let tableView = subject.view.getViewsOfType(UITableView.self).first
         tableView?.reloadData()
         
-        let developerChoiceCell = tableView!.cellForRow(at: IndexPath(item: 0, section: 0))
-        XCTAssertNotNil(developerChoiceCell)
-        XCTAssertEqual(developerChoiceCell?.textLabel?.text, "Developer")
-        XCTAssertEqual(developerChoiceCell?.detailTextLabel?.text, "Choose")
+        let filterRoleCell = tableView!.cellForRow(at: IndexPath(item: 0, section: 0))
+        XCTAssertNotNil(filterRoleCell)
+        XCTAssertEqual(filterRoleCell?.textLabel?.text, "Role")
+        XCTAssertEqual(filterRoleCell?.detailTextLabel?.text, "Choose")
     }
     
-    func test_chooseDeveloperCellTapShowsPicker() {
+    func test_filterRoleCellTapShowsPickerWithDoneAndCancelButtons() {
         let tableView = subject.view.getViewsOfType(UITableView.self).first!
-        let pickerView = subject.view.getViewsOfType(UIPickerView.self).first
-
+        
         tableView.reloadData()
-        tableView.delegate?.tableView!(tableView, didSelectRowAt: IndexPath(row: 0, section: 0))
+        tableView.cellForRow(at: IndexPath(row: 0, section: 0))?.isSelected = true
+        
+        let keyboardWindow = UIApplication.shared.windows.first(where: { $0.isKind(of: NSClassFromString("UIRemoteKeyboardWindow")!) })
+        let pickerView = keyboardWindow?.getFirstSubViewOfType(UIPickerView.self)
+        XCTAssertNotNil(pickerView)
+        XCTAssertEqual(pickerView?.numberOfComponents, 1)
+        XCTAssertEqual(pickerView?.numberOfRows(inComponent: 0) , 3)
 
-        XCTAssertFalse(pickerView!.isHidden)
+        let textEffectsWindow = UIApplication.shared.windows.first(where: { $0.isKind(of: NSClassFromString("UITextEffectsWindow")!) })
+        let selectionBar = textEffectsWindow?.getFirstSubViewOfType(UIToolbar.self)
+        XCTAssertNotNil(selectionBar)
+        let barButtonItems = selectionBar!.items!
+        XCTAssertEqual(barButtonItems[0].title, "Cancel")
+        XCTAssertEqual(barButtonItems[2].title, "Done")
     }
 }
 
@@ -66,5 +72,20 @@ extension UIView {
     func getViewsOfType<T>(_ type: T.Type) -> [T] {
         return self.subviews
             .filter{ ($0 as? T) != nil } as! [T]
+    }
+    
+    func getFirstSubViewOfType<T>(_ type: T.Type) -> T? {
+        guard self.subviews.count > 0 else { return nil }
+        let subViewsOfType = self.getViewsOfType(type)
+        if subViewsOfType.count > 0 {
+            return subViewsOfType.first
+        }
+        
+        for subView in self.subviews {
+            if let subViewOfType = subView.getFirstSubViewOfType(type) {
+                return subViewOfType
+            }
+        }
+        return nil
     }
 }
