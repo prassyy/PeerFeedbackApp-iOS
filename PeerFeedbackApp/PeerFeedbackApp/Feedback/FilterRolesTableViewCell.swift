@@ -32,7 +32,7 @@ class FilterRolesTableViewCell: UITableViewCell {
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
-        if selected { self.becomeFirstResponder() }
+        if selected { becomeFirstResponder() }
     }
 
     private func setupPickerView() {
@@ -48,9 +48,9 @@ class FilterRolesTableViewCell: UITableViewCell {
         rolesSelectionBar.sizeToFit()
         rolesSelectionBar.isUserInteractionEnabled = true
         
-        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: nil)
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(doneTapped))
         let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: nil)
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelTapped))
         rolesSelectionBar.setItems([cancelButton, spaceButton, doneButton], animated: false)
     }
     
@@ -58,10 +58,23 @@ class FilterRolesTableViewCell: UITableViewCell {
         setupPickerView()
         setupToolBar()
     }
+    
+    @objc private func doneTapped() {
+        let selectedIndex = rolesPickerView.selectedRow(inComponent: 0)
+        delegate?.chooseRole(from: selectedIndex)
+
+        detailTextLabel?.text = delegate?.roles[selectedIndex]
+        resignFirstResponder()
+    }
+    
+    @objc private func cancelTapped() {
+        resignFirstResponder()
+    }
 }
 
 protocol FilterRolesCellDelegate: class {
     var roles: [String] { get }
+    func chooseRole(from index: Int)
 }
 
 extension FilterRolesTableViewCell: UIPickerViewDelegate, UIPickerViewDataSource {

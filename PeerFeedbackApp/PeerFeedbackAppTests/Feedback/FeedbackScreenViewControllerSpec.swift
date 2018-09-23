@@ -13,9 +13,13 @@ import UIKit
 
 class FeedbackScreenViewControllerSpec: XCTestCase {
     
-    let subject: FeedbackScreenViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FeedbackScreenViewController") as! FeedbackScreenViewController
-
+    var subject: FeedbackScreenViewController!
+    var mockNavigationController: MockNavigationController!
+    
     override func setUp() {
+        subject = UIStoryboard(name: "Main", bundle: nil)
+            .instantiateViewController(withIdentifier: "FeedbackScreenViewController") as! FeedbackScreenViewController
+        mockNavigationController = MockNavigationController(rootViewController: subject)
         UIApplication.shared.keyWindow?.rootViewController = subject
         _ = subject.view
     }
@@ -46,46 +50,60 @@ class FeedbackScreenViewControllerSpec: XCTestCase {
         XCTAssertEqual(filterRoleCell?.detailTextLabel?.text, "Choose")
     }
     
+    func test_tableViewContainsCellToChoosePeerFromList() {
+        let tableView = subject.view.getViewsOfType(UITableView.self).first
+        tableView?.reloadData()
+        
+        let choosePeerCell = tableView!.cellForRow(at: IndexPath(item: 0, section: 1))
+        XCTAssertNotNil(choosePeerCell)
+        XCTAssertEqual(choosePeerCell?.textLabel?.text, "Peer Name")
+        XCTAssertEqual(choosePeerCell?.detailTextLabel?.text, "Choose")
+    }
+    
+    func test_tappingChoosePeerCellPresentsPeersNameListViewController() {
+        let tableView = subject.view.getViewsOfType(UITableView.self).first
+        tableView?.reloadData()
+        
+        tableView!.delegate?.tableView!(tableView!, didSelectRowAt: IndexPath(row: 0, section: 1))
+        XCTAssert(mockNavigationController.viewControllerPresented!.isKind(of: PeerNameListViewController.self))
+    }
+    
     func test_filterRoleCellTapShowsPickerWithDoneAndCancelButtons() {
         let tableView = subject.view.getViewsOfType(UITableView.self).first!
         
         tableView.reloadData()
-        tableView.cellForRow(at: IndexPath(row: 0, section: 0))?.isSelected = true
+        tableView.cellForRow(at: IndexPath(row: 0, section: 0))!.isSelected = true
         
         let keyboardWindow = UIApplication.shared.windows.first(where: { $0.isKind(of: NSClassFromString("UIRemoteKeyboardWindow")!) })
-        let pickerView = keyboardWindow?.getFirstSubViewOfType(UIPickerView.self)
+        let pickerView = keyboardWindow!.getFirstSubViewOfType(UIPickerView.self)
         XCTAssertNotNil(pickerView)
         XCTAssertEqual(pickerView?.numberOfComponents, 1)
         XCTAssertEqual(pickerView?.numberOfRows(inComponent: 0) , 3)
 
         let textEffectsWindow = UIApplication.shared.windows.first(where: { $0.isKind(of: NSClassFromString("UITextEffectsWindow")!) })
-        let selectionBar = textEffectsWindow?.getFirstSubViewOfType(UIToolbar.self)
+        let selectionBar = textEffectsWindow!.getFirstSubViewOfType(UIToolbar.self)
         XCTAssertNotNil(selectionBar)
         let barButtonItems = selectionBar!.items!
         XCTAssertEqual(barButtonItems[0].title, "Cancel")
         XCTAssertEqual(barButtonItems[2].title, "Done")
     }
-}
+    
+    func test_rolePickerDoneTapShouldUpdateTheCellDetailWithRole() {
+        //Given the role select pickerView with Done and Cancel button showing
+        let tableView = subject.view.getViewsOfType(UITableView.self).first!
+        tableView.reloadData()
+        tableView.cellForRow(at: IndexPath(row: 0, section: 0))!.isSelected = true
 
-extension UIView {
-    
-    func getViewsOfType<T>(_ type: T.Type) -> [T] {
-        return self.subviews
-            .filter{ ($0 as? T) != nil } as! [T]
-    }
-    
-    func getFirstSubViewOfType<T>(_ type: T.Type) -> T? {
-        guard self.subviews.count > 0 else { return nil }
-        let subViewsOfType = self.getViewsOfType(type)
-        if subViewsOfType.count > 0 {
-            return subViewsOfType.first
-        }
+        let barButtonItems = UIApplication.shared.windows.first(where: { $0.isKind(of: NSClassFromString("UITextEffectsWindow")!) })!
+            .getFirstSubViewOfType(UIToolbar.self)!.items!
+        let doneButton = barButtonItems[2]
         
-        for subView in self.subviews {
-            if let subViewOfType = subView.getFirstSubViewOfType(type) {
-                return subViewOfType
-            }
-        }
-        return nil
+        //When a role is Selected and done button is tapped
+        tableView.cellForRow(at: IndexPath(row: 0, section: 0))?
+            .performSelector(onMainThread: doneButton.action!, with: nil, waitUntilDone: true)
+
+        //Then it should update the role in the selection cell
+        let filterRoleCell = tableView.cellForRow(at: IndexPath(item: 0, section: 0))
+        XCTAssertEqual(filterRoleCell!.detailTextLabel!.text, "Project Manager")
     }
 }

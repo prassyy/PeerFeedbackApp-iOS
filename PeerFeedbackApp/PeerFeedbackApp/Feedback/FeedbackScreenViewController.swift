@@ -19,6 +19,7 @@ class FeedbackScreenViewController: UIViewController {
         feedbackTableView.delegate = self
         feedbackTableView.dataSource = self
         feedbackTableView.tableHeaderView = headerView()
+        feedbackTableView.tableFooterView = nil
     }
 
     private func headerView() -> UIView {
@@ -38,10 +39,16 @@ class FeedbackScreenViewController: UIViewController {
             cell.textLabel?.text = "Role"
             cell.detailTextLabel?.text = "Choose"
         }
-        
         return cell
     }
     
+    private func choosePeerNameCell(for tableView: UITableView, index: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ChoosePeerNameTableViewCell", for: index)
+        cell.textLabel?.text = "Peer Name"
+        cell.detailTextLabel?.text = "Choose"
+        
+        return cell
+    }
 }
 
 extension FeedbackScreenViewController: UITableViewDelegate, UITableViewDataSource {
@@ -54,6 +61,8 @@ extension FeedbackScreenViewController: UITableViewDelegate, UITableViewDataSour
         switch indexPath.section {
         case 0:
             return filterRolesCell(for: tableView, index: indexPath)
+        case 1:
+            return choosePeerNameCell(for: tableView, index: indexPath)
         default:
             return UITableViewCell()
         }
@@ -61,17 +70,24 @@ extension FeedbackScreenViewController: UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        if indexPath.section == 1 {
+            let peerNameListViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PeerNameListViewController")
+            self.navigationController?.present(peerNameListViewController, animated: true, completion: nil)
+        }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
 }
 
 extension FeedbackScreenViewController: FilterRolesCellDelegate {
-    var roles: [String] {
-        return ["Project Manager","Anchor","Software Engineer"]
+    func chooseRole(from index: Int) {
+        //Filter the values in Peer according to the value selected
+        
     }
     
-    
+    var roles: [String] {
+        return ["Project Manager","Android Developer","iOS Developer"]
+    }
 }
