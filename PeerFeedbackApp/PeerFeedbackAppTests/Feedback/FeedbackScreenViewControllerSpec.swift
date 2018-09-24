@@ -36,7 +36,7 @@ class FeedbackScreenViewControllerSpec: XCTestCase {
         let headerView = tableView!.tableHeaderView
         XCTAssertNotNil(headerView)
         
-        let titleLabel = headerView?.getViewsOfType(UILabel.self).first(where: { $0.text == "EV FB4 Peer Feedback"})
+        let titleLabel = headerView?.getViewsOfType(UILabel.self).first(where: { $0.text == "Peer Feedback"})
         XCTAssertNotNil(titleLabel)
     }
     
@@ -60,12 +60,22 @@ class FeedbackScreenViewControllerSpec: XCTestCase {
         XCTAssertEqual(choosePeerCell?.detailTextLabel?.text, "Choose")
     }
     
-    func test_tappingChoosePeerCellPresentsPeersNameListViewController() {
+    func test_tappingChoosePeerCellAfterChoosingRolePresentsPeersNameListViewController() {
         let tableView = subject.view.getViewsOfType(UITableView.self).first
         tableView?.reloadData()
-        
+        subject.chooseRole(from: 0)
         tableView!.delegate?.tableView!(tableView!, didSelectRowAt: IndexPath(row: 0, section: 1))
-        XCTAssert(mockNavigationController.viewControllerPresented!.isKind(of: PeerNameListViewController.self))
+
+        XCTAssert(mockNavigationController.viewControllerPresented != nil && mockNavigationController.viewControllerPresented!.isKind(of: PeerNameListViewController.self))
+    }
+    
+    func test_tappingChoosePeerCellWithoutChoosingRoleShouldntRespond() {
+        let tableView = subject.view.getViewsOfType(UITableView.self).first
+        tableView?.reloadData()
+
+        tableView!.delegate?.tableView!(tableView!, didSelectRowAt: IndexPath(row: 0, section: 1))
+        
+        XCTAssertNil(mockNavigationController.viewControllerPresented)
     }
     
     func test_filterRoleCellTapShowsPickerWithDoneAndCancelButtons() {
@@ -105,5 +115,29 @@ class FeedbackScreenViewControllerSpec: XCTestCase {
         //Then it should update the role in the selection cell
         let filterRoleCell = tableView.cellForRow(at: IndexPath(item: 0, section: 0))
         XCTAssertEqual(filterRoleCell!.detailTextLabel!.text, "Project Manager")
+    }
+    
+    func test_selectingAPeerFromNameListShouldDisplayTheNameInChoosePeerCell() {
+        let testPeer = PeerDetailsModel(role: "Android Developer", peerName: "Harshith", emailId: "pharshit@ford.com")
+        let tableView = subject.view.getViewsOfType(UITableView.self).first!
+        tableView.reloadData()
+
+        subject.chooseRole(from: 0)
+        subject.peerSelected(peer: testPeer)
+        
+        let choosePeerCell = tableView.cellForRow(at: IndexPath(row: 0, section: 1))!
+        XCTAssertEqual(choosePeerCell.detailTextLabel!.text, testPeer.peerName)
+    }
+    
+    func test_containsAButtonWithTextAsNext() {
+        let tableView = subject.view.getViewsOfType(UITableView.self).first
+        tableView?.reloadData()
+        
+        let actionCell = tableView!.cellForRow(at: IndexPath(item: 0, section: 2))
+        XCTAssertNotNil(actionCell)
+
+        let button = actionCell?.getFirstSubViewOfType(UIButton.self)
+        XCTAssertNotNil(button)
+        XCTAssertEqual(button?.titleLabel?.text, "Next")
     }
 }

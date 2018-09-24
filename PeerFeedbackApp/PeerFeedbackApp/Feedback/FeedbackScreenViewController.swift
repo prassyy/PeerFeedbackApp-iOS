@@ -10,6 +10,8 @@ import UIKit
 
 class FeedbackScreenViewController: UIViewController {
     @IBOutlet weak var feedbackTableView: UITableView!
+
+    private var peerDetailsModel = PeerDetailsModel()
     
     override func viewDidLoad() {
         setupTableView()
@@ -19,17 +21,17 @@ class FeedbackScreenViewController: UIViewController {
         feedbackTableView.delegate = self
         feedbackTableView.dataSource = self
         feedbackTableView.tableHeaderView = headerView()
-        feedbackTableView.tableFooterView = nil
+        feedbackTableView.tableFooterView = UIView()
     }
 
-    private func headerView() -> UIView {
+    private func headerView() -> UIView? {
         let nib = UINib(nibName: "TitleView", bundle: Bundle(for: type(of: self)))
         let viewsList = nib.instantiate(withOwner: self, options: nil)
         if viewsList.count > 0,
             let headerView = viewsList[0] as? UIView {
             return headerView
         }
-        return UIView()
+        return nil
     }
     
     private func filterRolesCell(for tableView: UITableView, index: IndexPath) -> UITableViewCell {
@@ -45,14 +47,19 @@ class FeedbackScreenViewController: UIViewController {
     private func choosePeerNameCell(for tableView: UITableView, index: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChoosePeerNameTableViewCell", for: index)
         cell.textLabel?.text = "Peer Name"
-        cell.detailTextLabel?.text = "Choose"
-        
+        cell.detailTextLabel?.text = peerDetailsModel.peerName ?? "Choose"
         return cell
+    }
+    
+    private func actionCell(for tableView: UITableView, index: IndexPath) -> UITableViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "ActionCell") {
+            return cell
+        }
+        return UITableViewCell()
     }
 }
 
 extension FeedbackScreenViewController: UITableViewDelegate, UITableViewDataSource {
-
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
@@ -63,6 +70,8 @@ extension FeedbackScreenViewController: UITableViewDelegate, UITableViewDataSour
             return filterRolesCell(for: tableView, index: indexPath)
         case 1:
             return choosePeerNameCell(for: tableView, index: indexPath)
+        case 2:
+            return actionCell(for: tableView, index: indexPath)
         default:
             return UITableViewCell()
         }
@@ -70,24 +79,32 @@ extension FeedbackScreenViewController: UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        if indexPath.section == 1 {
-            let peerNameListViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PeerNameListViewController")
+        if indexPath.section == 1, let selectedRole = peerDetailsModel.role {
+            let peerNameListViewController = PeerNameListViewController.instantiateFromStoryboard(role: selectedRole)
+            peerNameListViewController.delegate = self
             self.navigationController?.present(peerNameListViewController, animated: true, completion: nil)
         }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
 }
 
 extension FeedbackScreenViewController: FilterRolesCellDelegate {
     func chooseRole(from index: Int) {
-        //Filter the values in Peer according to the value selected
-        
+        peerDetailsModel.role = roles[index]
     }
     
     var roles: [String] {
         return ["Project Manager","Android Developer","iOS Developer"]
+    }
+}
+
+extension FeedbackScreenViewController: PeerNameListViewControllerDelegate {
+    func peerSelected(peer: PeerDetailsModel) {
+        peerDetailsModel.peerName = peer.peerName
+        peerDetailsModel.emailId = peer.emailId
+        feedbackTableView.reloadData()
     }
 }

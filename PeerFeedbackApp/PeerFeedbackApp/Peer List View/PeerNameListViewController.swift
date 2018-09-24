@@ -8,14 +8,28 @@
 
 import UIKit
 
+protocol PeerNameListViewControllerDelegate: class {
+    func peerSelected(peer: PeerDetailsModel)
+}
+
 class PeerNameListViewController: UIViewController {
 
-    let names = ["Aravind", "Saketh", "Hari", "Divya", "Kritika"]
+    var role: String!
+    var plistDataManager: PListDataManager!
 
+    var names: [PeerDetailsModel] = []
+    weak var delegate: PeerNameListViewControllerDelegate?
+    
     @IBOutlet weak var peerNameListTableView: UITableView!
     
     override func viewDidLoad() {
         setupTableView()
+        fetchNameList(for: role)
+    }
+
+    private func fetchNameList(for role: String) {
+        names = plistDataManager.fetchPeerNameList(for: role)
+        peerNameListTableView.reloadData()
     }
     
     private func setupTableView() {
@@ -41,22 +55,30 @@ class PeerNameListViewController: UIViewController {
     }
     
     @objc private func doneTapped() {
-
+        guard let index = peerNameListTableView.indexPathForSelectedRow else { return }
+        delegate?.peerSelected(peer: names[index.row])
+        self.presentingViewController?.dismiss(animated: true, completion: nil)
     }
     
     @objc private func cancelTapped() {
         self.presentingViewController?.dismiss(animated: true, completion: nil)
     }
+    
+    func setDependencies(role: String, plistDataManager: PListDataManager) {
+        self.role = role
+        self.plistDataManager = plistDataManager
+    }
 }
 
 extension PeerNameListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return names.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "PeerNameListTableViewCell") {
-            cell.textLabel?.text = names[indexPath.row]
+            let peerDetail = names[indexPath.row]
+            cell.textLabel?.text = peerDetail.peerName
             cell.accessoryView?.isHidden = true
             return cell
         }
@@ -65,5 +87,15 @@ extension PeerNameListViewController: UITableViewDelegate, UITableViewDataSource
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
+    }
+}
+
+extension PeerNameListViewController {
+
+    class func instantiateFromStoryboard(role: String,
+                                         plistDataManager: PListDataManager = PListDataManager()) -> PeerNameListViewController {
+        let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PeerNameListViewController") as! PeerNameListViewController
+        viewController.setDependencies(role: role, plistDataManager: plistDataManager)
+        return viewController
     }
 }

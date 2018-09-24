@@ -11,6 +11,9 @@
 		3343FF9B2157CD36009C516F /* MockNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3343FF9A2157CD36009C516F /* MockNavigationController.swift */; };
 		3343FF9D2157CD79009C516F /* UIView+Spec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3343FF9C2157CD79009C516F /* UIView+Spec.swift */; };
 		3343FFA02157D278009C516F /* PeerNameListViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3343FF9F2157D278009C516F /* PeerNameListViewControllerSpec.swift */; };
+		33CD684D21593A6E0031ADEA /* PListDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33CD684C21593A6E0031ADEA /* PListDataManager.swift */; };
+		33CD684F21593AAE0031ADEA /* PListDataManagerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33CD684E21593AAE0031ADEA /* PListDataManagerSpec.swift */; };
+		33CD6851215944960031ADEA /* peerNames.plist in Resources */ = {isa = PBXBuildFile; fileRef = 33CD6850215944960031ADEA /* peerNames.plist */; };
 		33E890322146D4E800D627C1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E890312146D4E800D627C1 /* AppDelegate.swift */; };
 		33E890372146D4E800D627C1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33E890352146D4E800D627C1 /* Main.storyboard */; };
 		33E890392146D4E900D627C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33E890382146D4E900D627C1 /* Assets.xcassets */; };
@@ -18,6 +21,8 @@
 		33E890522146D52900D627C1 /* FeedbackScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E890512146D52900D627C1 /* FeedbackScreenViewController.swift */; };
 		33E890542146D54000D627C1 /* FeedbackScreenViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E890532146D54000D627C1 /* FeedbackScreenViewControllerSpec.swift */; };
 		6125E0CC214F8F860098A381 /* FilterRolesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6125E0CB214F8F860098A381 /* FilterRolesTableViewCell.swift */; };
+		61360BB32158F278003BAACA /* peerNames.plist in Resources */ = {isa = PBXBuildFile; fileRef = 61360BB22158F278003BAACA /* peerNames.plist */; };
+		61360BB521591488003BAACA /* PeerDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61360BB421591488003BAACA /* PeerDetailsModel.swift */; };
 		61B9250621478C480021CE71 /* TitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61B9250521478C480021CE71 /* TitleView.xib */; };
 		61E5ACF62148EE4A00D5A31C /* roles.plist in Resources */ = {isa = PBXBuildFile; fileRef = 61E5ACF52148EE4A00D5A31C /* roles.plist */; };
 /* End PBXBuildFile section */
@@ -37,6 +42,9 @@
 		3343FF9A2157CD36009C516F /* MockNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNavigationController.swift; sourceTree = "<group>"; };
 		3343FF9C2157CD79009C516F /* UIView+Spec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Spec.swift"; sourceTree = "<group>"; };
 		3343FF9F2157D278009C516F /* PeerNameListViewControllerSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeerNameListViewControllerSpec.swift; sourceTree = "<group>"; };
+		33CD684C21593A6E0031ADEA /* PListDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PListDataManager.swift; sourceTree = "<group>"; };
+		33CD684E21593AAE0031ADEA /* PListDataManagerSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PListDataManagerSpec.swift; sourceTree = "<group>"; };
+		33CD6850215944960031ADEA /* peerNames.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = peerNames.plist; sourceTree = "<group>"; };
 		33E8902E2146D4E800D627C1 /* PeerFeedbackApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PeerFeedbackApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		33E890312146D4E800D627C1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		33E890362146D4E800D627C1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -48,6 +56,8 @@
 		33E890512146D52900D627C1 /* FeedbackScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackScreenViewController.swift; sourceTree = "<group>"; };
 		33E890532146D54000D627C1 /* FeedbackScreenViewControllerSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackScreenViewControllerSpec.swift; sourceTree = "<group>"; };
 		6125E0CB214F8F860098A381 /* FilterRolesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterRolesTableViewCell.swift; sourceTree = "<group>"; };
+		61360BB22158F278003BAACA /* peerNames.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = peerNames.plist; sourceTree = "<group>"; };
+		61360BB421591488003BAACA /* PeerDetailsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeerDetailsModel.swift; sourceTree = "<group>"; };
 		61B9250521478C480021CE71 /* TitleView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TitleView.xib; sourceTree = "<group>"; };
 		61E5ACF52148EE4A00D5A31C /* roles.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = roles.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -74,6 +84,7 @@
 			isa = PBXGroup;
 			children = (
 				3343FE602157A520009C516F /* PeerNameListViewController.swift */,
+				61360BB22158F278003BAACA /* peerNames.plist */,
 			);
 			path = "Peer List View";
 			sourceTree = "<group>";
@@ -122,6 +133,7 @@
 				33E890382146D4E900D627C1 /* Assets.xcassets */,
 				33E8903A2146D4E900D627C1 /* LaunchScreen.storyboard */,
 				33E8903D2146D4E900D627C1 /* Info.plist */,
+				33CD684C21593A6E0031ADEA /* PListDataManager.swift */,
 			);
 			path = PeerFeedbackApp;
 			sourceTree = "<group>";
@@ -133,6 +145,8 @@
 				3343FF992157CD1E009C516F /* Utilities */,
 				33E890562146DBDD00D627C1 /* Feedback */,
 				33E890482146D4EA00D627C1 /* Info.plist */,
+				33CD684E21593AAE0031ADEA /* PListDataManagerSpec.swift */,
+				33CD6850215944960031ADEA /* peerNames.plist */,
 			);
 			path = PeerFeedbackAppTests;
 			sourceTree = "<group>";
@@ -145,6 +159,7 @@
 				61B9250521478C480021CE71 /* TitleView.xib */,
 				61E5ACF52148EE4A00D5A31C /* roles.plist */,
 				6125E0CB214F8F860098A381 /* FilterRolesTableViewCell.swift */,
+				61360BB421591488003BAACA /* PeerDetailsModel.swift */,
 			);
 			path = Feedback;
 			sourceTree = "<group>";
@@ -240,6 +255,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				33E8903C2146D4E900D627C1 /* LaunchScreen.storyboard in Resources */,
+				61360BB32158F278003BAACA /* peerNames.plist in Resources */,
 				33E890392146D4E900D627C1 /* Assets.xcassets in Resources */,
 				61E5ACF62148EE4A00D5A31C /* roles.plist in Resources */,
 				61B9250621478C480021CE71 /* TitleView.xib in Resources */,
@@ -251,6 +267,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				33CD6851215944960031ADEA /* peerNames.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,7 +278,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				33CD684D21593A6E0031ADEA /* PListDataManager.swift in Sources */,
 				3343FE612157A520009C516F /* PeerNameListViewController.swift in Sources */,
+				61360BB521591488003BAACA /* PeerDetailsModel.swift in Sources */,
 				33E890322146D4E800D627C1 /* AppDelegate.swift in Sources */,
 				33E890522146D52900D627C1 /* FeedbackScreenViewController.swift in Sources */,
 				6125E0CC214F8F860098A381 /* FilterRolesTableViewCell.swift in Sources */,
@@ -275,6 +294,7 @@
 				33E890542146D54000D627C1 /* FeedbackScreenViewControllerSpec.swift in Sources */,
 				3343FF9D2157CD79009C516F /* UIView+Spec.swift in Sources */,
 				3343FFA02157D278009C516F /* PeerNameListViewControllerSpec.swift in Sources */,
+				33CD684F21593AAE0031ADEA /* PListDataManagerSpec.swift in Sources */,
 				3343FF9B2157CD36009C516F /* MockNavigationController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -360,7 +380,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -414,7 +434,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
