@@ -20,6 +20,7 @@ class FeedbackScreenViewControllerSpec: XCTestCase {
         subject = UIStoryboard(name: "Main", bundle: nil)
             .instantiateViewController(withIdentifier: "FeedbackScreenViewController") as! FeedbackScreenViewController
         mockNavigationController = MockNavigationController(rootViewController: subject)
+        mockNavigationController.viewControllerPushed = nil
         UIApplication.shared.keyWindow?.rootViewController = subject
         _ = subject.view
     }
@@ -122,22 +123,69 @@ class FeedbackScreenViewControllerSpec: XCTestCase {
         let tableView = subject.view.getViewsOfType(UITableView.self).first!
         tableView.reloadData()
 
-        subject.chooseRole(from: 0)
+        subject.chooseRole(from: 1)
         subject.peerSelected(peer: testPeer)
+
+        let filterRoleCell = tableView.cellForRow(at: IndexPath(row: 0, section: 0))!
+        XCTAssertEqual(filterRoleCell.detailTextLabel?.text, testPeer.role)
         
         let choosePeerCell = tableView.cellForRow(at: IndexPath(row: 0, section: 1))!
         XCTAssertEqual(choosePeerCell.detailTextLabel!.text, testPeer.peerName)
     }
     
     func test_containsAButtonWithTextAsNext() {
-        let tableView = subject.view.getViewsOfType(UITableView.self).first
-        tableView?.reloadData()
+        let tableView = subject.view.getViewsOfType(UITableView.self).first!
+        tableView.reloadData()
         
-        let actionCell = tableView!.cellForRow(at: IndexPath(item: 0, section: 2))
-        XCTAssertNotNil(actionCell)
+        let footerView = tableView.tableFooterView
+        XCTAssertNotNil(footerView)
 
-        let button = actionCell?.getFirstSubViewOfType(UIButton.self)
+        let button = footerView?.getFirstSubViewOfType(UIButton.self)
         XCTAssertNotNil(button)
         XCTAssertEqual(button?.titleLabel?.text, "Next")
+    }
+    
+    func test_tappingNextButtonShouldNavigateToFeedbackQuestionnaire() {
+        let testPeer = PeerDetailsModel(role: "Android Developer", peerName: "Harshith", emailId: "pharshit@ford.com")
+        let tableView = subject.view.getViewsOfType(UITableView.self).first!
+        tableView.reloadData()
+        
+        let footerView = tableView.tableFooterView!
+        let button = footerView.getFirstSubViewOfType(UIButton.self)!
+
+        subject.chooseRole(from: 1)
+        subject.peerSelected(peer: testPeer)
+
+        button.sendActions(for: .touchUpInside)
+        XCTAssert(mockNavigationController.viewControllerPushed != nil && mockNavigationController.viewControllerPushed!.isKind(of: FeedbackQuestionnaireViewController.self))
+    }
+    
+    func test_tappingNextButtonWithoutChoosingPeerShouldntRespond() {
+        let tableView = subject.view.getViewsOfType(UITableView.self).first!
+        tableView.reloadData()
+        
+        let footerView = tableView.tableFooterView!
+        let button = footerView.getFirstSubViewOfType(UIButton.self)!
+        
+        button.sendActions(for: .touchUpInside)
+        
+        XCTAssertNil(mockNavigationController.viewControllerPushed)
+    }
+    
+    func test_afterChoosingAPeerWhenRoleIsChangedShouldResetThePeerName() {
+        let testPeer = PeerDetailsModel(role: "Android Developer", peerName: "Harshith", emailId: "pharshit@ford.com")
+        
+        let tableView = subject.view.getViewsOfType(UITableView.self).first!
+        tableView.reloadData()
+        
+        subject.chooseRole(from: 1)
+        subject.peerSelected(peer: testPeer)
+        
+        var choosePeerCell = tableView.cellForRow(at: IndexPath(row: 0, section: 1))!
+        XCTAssertEqual(choosePeerCell.detailTextLabel!.text, testPeer.peerName)
+        
+        subject.chooseRole(from: 0)
+        choosePeerCell = tableView.cellForRow(at: IndexPath(row: 0, section: 1))!
+        XCTAssertEqual(choosePeerCell.detailTextLabel!.text, "Choose")
     }
 }

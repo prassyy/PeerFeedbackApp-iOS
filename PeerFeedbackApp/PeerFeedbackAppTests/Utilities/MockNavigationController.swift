@@ -11,6 +11,7 @@ import UIKit
 class MockNavigationController: UINavigationController {
     
     var viewControllerPresented: UIViewController?
+    var viewControllerPushed: UIViewController?
     var dismissCalled: Bool!
     
     init() {
@@ -35,5 +36,10 @@ class MockNavigationController: UINavigationController {
     
     override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
         self.dismissCalled = true
+    }
+    
+    override func pushViewController(_ viewController: UIViewController, animated: Bool) {
+        self.viewControllerPushed = viewController
+        super.pushViewController(viewController, animated: false)
     }
 }

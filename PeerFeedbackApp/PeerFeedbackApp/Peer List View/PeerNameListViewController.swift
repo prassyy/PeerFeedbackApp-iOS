@@ -88,10 +88,11 @@ extension PeerNameListViewController: UITableViewDelegate, UITableViewDataSource
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
+    
 }
 
 extension PeerNameListViewController {
-
+    
     class func instantiateFromStoryboard(role: String,
                                          plistDataManager: PListDataManager = PListDataManager()) -> PeerNameListViewController {
         let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PeerNameListViewController") as! PeerNameListViewController
