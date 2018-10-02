@@ -18,7 +18,7 @@ class FeedbackScreenViewControllerSpec: XCTestCase {
     
     override func setUp() {
         subject = UIStoryboard(name: "Main", bundle: nil)
-            .instantiateViewController(withIdentifier: "FeedbackScreenViewController") as! FeedbackScreenViewController
+            .instantiateViewController(withIdentifier: "FeedbackScreenViewController") as? FeedbackScreenViewController
         mockNavigationController = MockNavigationController(rootViewController: subject)
         mockNavigationController.viewControllerPushed = nil
         UIApplication.shared.keyWindow?.rootViewController = subject

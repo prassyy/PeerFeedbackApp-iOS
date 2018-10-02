@@ -70,7 +70,7 @@ class FeedbackScreenViewController: UIViewController {
         guard peerDetailsModel.role.exists,
             peerDetailsModel.peerName.exists,
             peerDetailsModel.emailId.exists else { return }
-        
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         self.navigationController?.pushViewController(FeedbackQuestionnaireViewController
             .instantiateFromStoryboard(peer: peerDetailsModel),
                                                       animated: true)

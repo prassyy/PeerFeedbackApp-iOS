@@ -17,6 +17,12 @@ class PListDataManagerSpec: XCTestCase {
                       PeerDetailsModel(role: "iOS Developer", peerName: "Karpagam", emailId: "ekarpaga@ford.com"),
                       PeerDetailsModel(role: "iOS Developer", peerName: "Prasanna", emailId: "kprasan6@ford.com"),
                       PeerDetailsModel(role: "iOS Developer", peerName: "Elumalai", emailId: "relumal2@ford.com")]
+    let testQuestions = [
+        FeedbackQuestionModel(question: "Test question 1", isChoiceBased: false, choices: [], role: "Software Engineer"),
+        FeedbackQuestionModel(question: "Test question 2", isChoiceBased: true, choices: [], role: "Software Engineer"),
+        FeedbackQuestionModel(question: "Test question 3", isChoiceBased: true, choices: [], role: "Product Manager"),
+        FeedbackQuestionModel(question: "Test question 4", isChoiceBased: false, choices: [], role: "Software Engineer")
+    ]
     
     override func setUp() {
         subject = PListDataManager(bundle: Bundle(for: type(of: self)))
@@ -39,8 +45,34 @@ class PListDataManagerSpec: XCTestCase {
         }
     }
     
+    func test_returnsFeedbackQuestionsFromPlist() {
+        let expectedDevQuestions = getTestQuestions(for: "Software Engineer")
+        let expectedPmQuestions = getTestQuestions(for: "Product Manager")
+        
+        let androidFeedbackQuestions = subject.fetchFeedbackQuestions(for: "Android Developer")
+        let iOSFeedbackQuestions = subject.fetchFeedbackQuestions(for: "iOS Developer")
+        let pmFeedbackQuestions = subject.fetchFeedbackQuestions(for: "Product Manager")
+        
+        compareQuestions(lhs: androidFeedbackQuestions, rhs: expectedDevQuestions)
+        compareQuestions(lhs: iOSFeedbackQuestions, rhs: expectedDevQuestions)
+        compareQuestions(lhs: pmFeedbackQuestions , rhs: expectedPmQuestions)
+    }
+    
+    func compareQuestions(lhs: [FeedbackQuestionModel], rhs: [FeedbackQuestionModel]) {
+        for (index, lhsQuestion) in lhs.enumerated() {
+            let rhsQuestion = rhs[index]
+            XCTAssert(lhsQuestion.equals(questionModel: rhsQuestion))
+        }
+    }
+}
+
+extension PListDataManagerSpec {
     private func getTestPeers(for role: String) -> [PeerDetailsModel] {
         return testPeers.filter { $0.role == role }
+    }
+    
+    private func getTestQuestions(for role: String) -> [FeedbackQuestionModel] {
+        return testQuestions.filter { $0.role == role }
     }
 }
 
@@ -50,5 +82,15 @@ extension PeerDetailsModel {
         return self.peerName == peer.peerName &&
                 self.role == peer.role &&
                 self.emailId == peer.emailId
+    }
+}
+
+extension FeedbackQuestionModel {
+    
+    func equals(questionModel: FeedbackQuestionModel) -> Bool {
+        return self.question == questionModel.question &&
+            self.role == questionModel.role &&
+            self.isChoiceBased == questionModel.isChoiceBased &&
+            self.choices?.count == questionModel.choices?.count
     }
 }

@@ -36,4 +36,25 @@ class PListDataManager {
         }
         return []
     }
+    
+    func fetchFeedbackQuestions(for role: String) -> [FeedbackQuestionModel] {
+        if let path = bundle.path(forResource: "questions", ofType: "plist"),
+            let dictArray = NSArray(contentsOfFile: path) {
+            return dictArray.compactMap {
+                    if let dict = $0 as? NSDictionary,
+                        let question = dict["question"] as? String,
+                        let isChoiceBased = dict["isChoiceBased"] as? Bool,
+                        let choices = dict["choices"] as? [Dictionary<String, String>],
+                        let peerRole = dict["role"] as? String {
+                        return FeedbackQuestionModel(question: question,
+                            isChoiceBased: isChoiceBased,
+                            choices: choices,
+                            role: peerRole
+                        )
+                    }
+                    return nil
+                }.filter { $0.belongsTo(peerRole: role) }
+        }
+        return []
+    }
 }
