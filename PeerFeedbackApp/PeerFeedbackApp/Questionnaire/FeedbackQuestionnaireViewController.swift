@@ -11,6 +11,8 @@ import UIKit
 class FeedbackQuestionnaireViewController: UIViewController {
     var peerModel: PeerDetailsModel!
     var dataManager: PListDataManager!
+    var questions: [FeedbackQuestionModel] = []
+    var responses: [FeedbackResponseModel] = []
     
     @IBOutlet weak var questionsTableView: UITableView!
     
@@ -27,18 +29,35 @@ class FeedbackQuestionnaireViewController: UIViewController {
     
     private func setupTableView() {
         questionsTableView.dataSource = self
+        questionsTableView.delegate = self
         questionsTableView.tableFooterView = UIView()
+        questionsTableView.separatorColor = UIColor.clear
+        questionsTableView.register(UINib(nibName: "FeedbackQuestionTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedbackQuestionsTableViewCell")
+    }
+    
+    private func fetchQuestions() {
+        if let role = peerModel.role {
+            questions = dataManager.fetchFeedbackQuestions(for: role)
+            responses = questions.map {
+                FeedbackResponseModel(question: $0.question,
+                                      response: nil,
+                                      isResponded: false)
+            }
+        }
     }
     
     override func viewDidLoad() {
         setupTitle()
+        fetchQuestions()
         setupTableView()
     }
 }
 
-extension FeedbackQuestionnaireViewController: UITableViewDataSource {
+extension FeedbackQuestionnaireViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "FeedbackQuestionsTableViewCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "FeedbackQuestionsTableViewCell", for: indexPath) as! FeedbackQuestionTableViewCell
+        let question = questions[indexPath.row]
+        cell.configure(with: question, delegate: self)
         return cell
     }
     
@@ -48,9 +67,13 @@ extension FeedbackQuestionnaireViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return 10
+            return questions.count
         }
         return 0
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 
@@ -60,5 +83,11 @@ extension FeedbackQuestionnaireViewController {
         let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FeedbackQuestionnaireViewController") as! FeedbackQuestionnaireViewController
         viewController.setDependencies(peer: peer, plistDataManager: plistDataManager)
         return viewController
+    }
+}
+
+extension FeedbackQuestionnaireViewController: FeedbackQuestionTableViewCellDelegate {
+    func isQuestionResponded(index: Int) -> Bool {
+        return false
     }
 }

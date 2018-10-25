@@ -44,7 +44,7 @@ class PListDataManager {
                     if let dict = $0 as? NSDictionary,
                         let question = dict["question"] as? String,
                         let isChoiceBased = dict["isChoiceBased"] as? Bool,
-                        let choices = dict["choices"] as? [Dictionary<String, String>],
+                        let choices = dict["choices"] as? Dictionary<String, String>,
                         let peerRole = dict["role"] as? String {
                         return FeedbackQuestionModel(question: question,
                             isChoiceBased: isChoiceBased,

@@ -11,7 +11,7 @@ import Foundation
 struct FeedbackQuestionModel {
     var question: String?
     var isChoiceBased: Bool?
-    var choices: [Dictionary<String, String>]?
+    var choices: Dictionary<String, String>?
     var role: String?
     
     func belongsTo(peerRole: String) -> Bool {
