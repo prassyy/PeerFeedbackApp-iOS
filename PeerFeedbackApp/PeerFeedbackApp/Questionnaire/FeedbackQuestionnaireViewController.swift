@@ -12,9 +12,33 @@ class FeedbackQuestionnaireViewController: UIViewController {
     var peerModel: PeerDetailsModel!
     var dataManager: PListDataManager!
     var questions: [FeedbackQuestionModel] = []
-    var responses: [FeedbackResponseModel] = []
+
+    var responses: Dictionary<Int, String> = Dictionary<Int, String>() {
+        didSet {
+            footerView.setButtonEnabled(isEnabled: questions.map { $0.id }
+                .reduce(true) { (allQuestionsResponded, questionId) -> Bool in
+                    if let id = questionId, let response = responses[id] {
+                        return !response.isEmpty && allQuestionsResponded
+                    }
+                    return false
+                })
+        }
+    }
     
     @IBOutlet weak var questionsTableView: UITableView!
+    
+    lazy var footerView: FooterView = {
+        let nib = UINib(nibName: "FooterView", bundle: nil)
+        let viewsList = nib.instantiate(withOwner: self, options: nil)
+        if viewsList.count > 0,
+            let footerView = viewsList[0] as? FooterView {
+            footerView.footerButton.setTitle("Submit", for: .normal)
+            footerView.setButtonEnabled(isEnabled: false)
+            footerView.footerButton.addTarget(self, action: #selector(submitButtonTapped), for: .touchUpInside)
+            return footerView
+        }
+        return FooterView()
+    }()
     
     func setDependencies(peer: PeerDetailsModel, plistDataManager: PListDataManager) {
         peerModel = peer
@@ -30,19 +54,18 @@ class FeedbackQuestionnaireViewController: UIViewController {
     private func setupTableView() {
         questionsTableView.dataSource = self
         questionsTableView.delegate = self
-        questionsTableView.tableFooterView = UIView()
+        questionsTableView.tableFooterView = footerView
         questionsTableView.separatorColor = UIColor.clear
         questionsTableView.register(UINib(nibName: "FeedbackQuestionTableViewCell", bundle: nil), forCellReuseIdentifier: "FeedbackQuestionsTableViewCell")
+    }
+    
+    @objc func submitButtonTapped() {
+        //
     }
     
     private func fetchQuestions() {
         if let role = peerModel.role {
             questions = dataManager.fetchFeedbackQuestions(for: role)
-            responses = questions.map {
-                FeedbackResponseModel(question: $0.question,
-                                      response: nil,
-                                      isResponded: false)
-            }
         }
     }
     
@@ -54,10 +77,12 @@ class FeedbackQuestionnaireViewController: UIViewController {
 }
 
 extension FeedbackQuestionnaireViewController: UITableViewDataSource, UITableViewDelegate {
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "FeedbackQuestionsTableViewCell", for: indexPath) as! FeedbackQuestionTableViewCell
-        let question = questions[indexPath.row]
-        cell.configure(with: question, delegate: self)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "FeedbackQuestionsTableViewCell", for: indexPath)
+        if let questionCell = cell as? FeedbackQuestionTableViewCell {
+            questionCell.configure(with: questions[indexPath.row], delegate: self)
+        }
         return cell
     }
     
@@ -87,7 +112,17 @@ extension FeedbackQuestionnaireViewController {
 }
 
 extension FeedbackQuestionnaireViewController: FeedbackQuestionTableViewCellDelegate {
-    func isQuestionResponded(index: Int) -> Bool {
-        return false
+
+    func response(for question: FeedbackQuestionModel) -> String? {
+        if let questionId = question.id {
+            return responses[questionId]
+        }
+        return nil
+    }
+    
+    func selectedResponse(for question: FeedbackQuestionModel, response: String) {
+        if let questionId = question.id {
+            responses[questionId] = response
+        }
     }
 }

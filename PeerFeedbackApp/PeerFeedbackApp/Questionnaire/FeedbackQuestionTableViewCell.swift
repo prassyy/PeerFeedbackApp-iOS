@@ -9,13 +9,14 @@
 import UIKit
 
 protocol FeedbackQuestionTableViewCellDelegate: class {
-    func isQuestionResponded(index: Int) -> Bool
+    func response(for question: FeedbackQuestionModel) -> String?
+    func selectedResponse(for question: FeedbackQuestionModel, response: String)
 }
 
 class FeedbackQuestionTableViewCell: UITableViewCell {
     
     @IBOutlet weak var questionLabel: UILabel!
-    @IBOutlet weak var responseTextView: UITextView!
+    @IBOutlet weak var responseTextField: UITextField!
     @IBOutlet weak var answerChoiceLabel: UILabel!
     
     var questionModel: FeedbackQuestionModel!
@@ -29,13 +30,16 @@ class FeedbackQuestionTableViewCell: UITableViewCell {
     }
     
     override var inputAccessoryView: UIView? {
-        return answerSelectionBar
+        if let question = questionModel,
+           let isChoiceBased = question.isChoiceBased,
+           isChoiceBased {
+            return answerSelectionBar
+        }
+        return nil
     }
     
     open override var canBecomeFirstResponder: Bool {
-        return questionModel.exists
-            && questionModel.isChoiceBased.exists
-            && questionModel.isChoiceBased!
+        return true
     }
     
     open override var canResignFirstResponder: Bool {
@@ -51,8 +55,7 @@ class FeedbackQuestionTableViewCell: UITableViewCell {
     }
 
     override func awakeFromNib() {
-        responseTextView.layer.borderWidth = 0.5
-        responseTextView.layer.borderColor = UIColor.lightGray.cgColor
+        responseTextField.delegate = self
         setupPickerView()
         setupToolBar()
     }
@@ -79,8 +82,10 @@ class FeedbackQuestionTableViewCell: UITableViewCell {
     @objc private func doneTapped() {
         let selectedIndex = answerPickerView.selectedRow(inComponent: 0)
         if let question = questionModel,
-            let choices = question.choices {
-            answerChoiceLabel.text = choices[String(selectedIndex)]
+           let choices = question.choices,
+           let response = choices[String(selectedIndex)] {
+            answerChoiceLabel.text = response
+            delegate?.selectedResponse(for: questionModel, response: response)
         }
         resignFirstResponder()
     }
@@ -93,12 +98,18 @@ class FeedbackQuestionTableViewCell: UITableViewCell {
                    delegate: FeedbackQuestionTableViewCellDelegate?) {
         self.questionModel = questionModel
         self.delegate = delegate
-        
+
         questionLabel.text = questionModel.question
+        
         if let isChoiceBased = questionModel.isChoiceBased {
-            responseTextView.isHidden = isChoiceBased
+            responseTextField.isHidden = isChoiceBased
+            responseTextField.text = delegate?.response(for: questionModel)
+            
             answerChoiceLabel.isHidden = !isChoiceBased
-            accessoryType = isChoiceBased ? UITableViewCellAccessoryType.disclosureIndicator : UITableViewCellAccessoryType.none
+            answerChoiceLabel.text = delegate?.response(for: questionModel) ?? "Select"
+            accessoryType = isChoiceBased
+                ? UITableViewCellAccessoryType.disclosureIndicator
+                : UITableViewCellAccessoryType.none
         }
     }
 }
@@ -110,7 +121,7 @@ extension FeedbackQuestionTableViewCell: UIPickerViewDelegate, UIPickerViewDataS
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if let question = questionModel,
-            let choices = question.choices {
+           let choices = question.choices {
             return choices.count
         }
         return 0
@@ -118,9 +129,24 @@ extension FeedbackQuestionTableViewCell: UIPickerViewDelegate, UIPickerViewDataS
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         if let question = questionModel,
-            let choices = question.choices {
+           let choices = question.choices {
             return choices[String(row)]
         }
         return nil
+    }
+}
+
+extension FeedbackQuestionTableViewCell: UITextFieldDelegate {
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if let enteredText = textField.text {
+            delegate?.selectedResponse(for: questionModel, response: enteredText)
+        }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        resignFirstResponder()
+        return false
     }
 }

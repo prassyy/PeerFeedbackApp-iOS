@@ -9,6 +9,7 @@
 import Foundation
 
 struct FeedbackQuestionModel {
+    var id: Int?
     var question: String?
     var isChoiceBased: Bool?
     var choices: Dictionary<String, String>?

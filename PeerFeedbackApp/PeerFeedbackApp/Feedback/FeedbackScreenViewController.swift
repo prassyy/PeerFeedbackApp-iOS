@@ -14,9 +14,42 @@ enum Section: Int {
 }
 
 class FeedbackScreenViewController: UIViewController {
-    private var peerDetailsModel = PeerDetailsModel()
+    private var peerDetailsModel = PeerDetailsModel() {
+        didSet {
+            if peerDetailsModel.role.exists,
+                peerDetailsModel.peerName.exists,
+                peerDetailsModel.emailId.exists {
+                footerView.setButtonEnabled(isEnabled: true)
+            } else {
+                footerView.setButtonEnabled(isEnabled: false)
+            }
+        }
+    }
 
     @IBOutlet weak var feedbackTableView: UITableView!
+    
+    lazy var headerView: UIView? = {
+        let nib = UINib(nibName: "TitleView", bundle: Bundle(for: type(of: self)))
+        let viewsList = nib.instantiate(withOwner: self, options: nil)
+        if viewsList.count > 0,
+            let headerView = viewsList[0] as? UIView {
+            return headerView
+        }
+        return nil
+    }()
+    
+    lazy var footerView: FooterView = {
+        let nib = UINib(nibName: "FooterView", bundle: nil)
+        let viewsList = nib.instantiate(withOwner: self, options: nil)
+        if viewsList.count > 0,
+            let footerView = viewsList[0] as? FooterView {
+            footerView.footerButton.setTitle("Next", for: .normal)
+            footerView.setButtonEnabled(isEnabled: false)
+            footerView.footerButton.addTarget(self, action: #selector(nextAction), for: .touchUpInside)
+            return footerView
+        }
+        return FooterView()
+    }()
     
     override func viewDidLoad() {
         setupTableView()
@@ -25,18 +58,8 @@ class FeedbackScreenViewController: UIViewController {
     private func setupTableView() {
         feedbackTableView.delegate = self
         feedbackTableView.dataSource = self
-        feedbackTableView.tableHeaderView = headerView()
-        feedbackTableView.tableFooterView = footerView()
-    }
-
-    private func headerView() -> UIView? {
-        let nib = UINib(nibName: "TitleView", bundle: Bundle(for: type(of: self)))
-        let viewsList = nib.instantiate(withOwner: self, options: nil)
-        if viewsList.count > 0,
-            let headerView = viewsList[0] as? UIView {
-            return headerView
-        }
-        return nil
+        feedbackTableView.tableHeaderView = headerView
+        feedbackTableView.tableFooterView = footerView
     }
 
     private func filterRolesCell(for tableView: UITableView, index: IndexPath) -> UITableViewCell {
@@ -55,18 +78,8 @@ class FeedbackScreenViewController: UIViewController {
         cell.detailTextLabel?.text = peerDetailsModel.peerName ?? "Choose"
         return cell
     }
-
-    private func footerView() -> UIView? {
-        let nib = UINib(nibName: "FooterView", bundle: Bundle(for: type(of: self)))
-        let viewsList = nib.instantiate(withOwner: self, options: nil)
-        if viewsList.count > 0,
-            let footerView = viewsList[0] as? UIView {
-            return footerView
-        }
-        return nil
-    }
     
-    @IBAction func nextAction() {
+    @objc func nextAction() {
         guard peerDetailsModel.role.exists,
             peerDetailsModel.peerName.exists,
             peerDetailsModel.emailId.exists else { return }
@@ -100,6 +113,17 @@ extension FeedbackScreenViewController: UITableViewDelegate, UITableViewDataSour
             self.navigationController?.present(peerNameListViewController, animated: true, completion: nil)
         }
     }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        guard let section = Section(rawValue: section) else { return "" }
+
+        switch section {
+        case .chooseRole:
+            return "Choose the role of your Peer"
+        case .choosePeer:
+            return "Choose the Name of your Peer from below"
+        }
+    }
 
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
@@ -124,7 +148,7 @@ extension FeedbackScreenViewController: PeerNameListViewControllerDelegate {
     func peerSelected(peer: PeerDetailsModel) {
         peerDetailsModel.peerName = peer.peerName
         peerDetailsModel.emailId = peer.emailId
-
+        
         feedbackTableView.reloadData()
     }
 }
