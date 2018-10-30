@@ -95,6 +95,8 @@ class FeedbackQuestionTableViewCell: UITableViewCell {
     }
     
     func configure(with questionModel: FeedbackQuestionModel,
+                   isFirstQuestion: Bool = false,
+                   isLastQuestion: Bool = false,
                    delegate: FeedbackQuestionTableViewCellDelegate?) {
         self.questionModel = questionModel
         self.delegate = delegate

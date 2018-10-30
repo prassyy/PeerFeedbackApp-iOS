@@ -81,7 +81,10 @@ extension FeedbackQuestionnaireViewController: UITableViewDataSource, UITableVie
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FeedbackQuestionsTableViewCell", for: indexPath)
         if let questionCell = cell as? FeedbackQuestionTableViewCell {
-            questionCell.configure(with: questions[indexPath.row], delegate: self)
+            questionCell.configure(with: questions[indexPath.row],
+                                   isFirstQuestion: indexPath.row == 0,
+                                   isLastQuestion: indexPath.row == questions.count - 1,
+                                   delegate: self)
         }
         return cell
     }
