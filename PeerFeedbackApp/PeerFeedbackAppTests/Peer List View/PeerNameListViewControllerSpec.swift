@@ -13,17 +13,17 @@ class PeerNameListViewControllerSpec: XCTestCase {
     
     var subject: PeerNameListViewController!
     var baseViewController: MockUIViewController!
-    var mockPlistDataManager: MockPlistDataManager!
+    var mockPeerFeedbackDataManager: MockPeerFeedbackDataManager!
     var mockPeerNameListViewControllerDelegate: MockPeerNameListViewControllerDelegate!
 
     override func setUp() {
-        mockPlistDataManager = MockPlistDataManager()
+        mockPeerFeedbackDataManager = MockPeerFeedbackDataManager()
         baseViewController = MockUIViewController()
         mockPeerNameListViewControllerDelegate = MockPeerNameListViewControllerDelegate()
         
         UIApplication.shared.keyWindow?.rootViewController = baseViewController
         _ = baseViewController.view
-        subject = PeerNameListViewController.instantiateFromStoryboard(role: "Android Developer", plistDataManager: mockPlistDataManager)
+        subject = PeerNameListViewController.instantiateFromStoryboard(role: Role(rawValue: "pokemon")!, peerFeedbackDataManager: mockPeerFeedbackDataManager)
         subject.delegate = mockPeerNameListViewControllerDelegate
         baseViewController.present(subject, animated: false)
         _ = subject.view
@@ -43,16 +43,16 @@ class PeerNameListViewControllerSpec: XCTestCase {
     }
 
     func test_populatesTheListWithNames() {
-        mockPlistDataManager.peerNameList = [ PeerDetailsModel(role: "Android Developer", peerName: "Harshith", emailId: "pharshit@ford.com"),
-                                              PeerDetailsModel(role: "Android Developer", peerName: "Mukesh", emailId: "bmukesh@ford.com"),
-                                              PeerDetailsModel(role: "iOS Developer", peerName: "Karpagam", emailId: "ekarpaga@ford.com")]
+        mockPeerFeedbackDataManager.peerNameList = [ PeerDetailsModel(role: Role(rawValue: "pokemon"), peerName: "Harshith", emailId: "pharshit@ford.com"),
+                                                     PeerDetailsModel(role: Role(rawValue: "pokemon"), peerName: "Mukesh", emailId: "bmukesh@ford.com"),
+                                                     PeerDetailsModel(role: Role(rawValue: "pokemon"), peerName: "Karpagam", emailId: "ekarpaga@ford.com")]
         subject.viewDidLoad()
 
         let tableView = subject.view.getFirstSubViewOfType(UITableView.self)
         tableView?.reloadData()
         XCTAssertEqual(tableView!.numberOfSections, 1)
         XCTAssertEqual(tableView!.numberOfRows(inSection: 0), 3)
-        for (index, peer) in mockPlistDataManager.peerNameList.enumerated() {
+        for (index, peer) in mockPeerFeedbackDataManager.peerNameList.enumerated() {
             XCTAssertEqual(tableView!.cellForRow(at: IndexPath(row: index, section: 0))?.textLabel!.text, peer.peerName)
         }
     }
@@ -75,8 +75,8 @@ class PeerNameListViewControllerSpec: XCTestCase {
     }
     
     func test_tappingDoneAfterChoosingPeerShouldSendThePeerDetailsToDelegate() {
-        let testPeer = PeerDetailsModel(role: "Android Developer", peerName: "Harshith", emailId: "pharshit@ford.com")
-        mockPlistDataManager.peerNameList = [ testPeer ]
+        let testPeer = PeerDetailsModel(role: Role(rawValue: "avengers"), peerName: "Harshith", emailId: "pharshit@ford.com")
+        mockPeerFeedbackDataManager.peerNameList = [ testPeer ]
         subject.viewDidLoad()
         
         let tableView = subject.view.getFirstSubViewOfType(UITableView.self)
@@ -87,7 +87,8 @@ class PeerNameListViewControllerSpec: XCTestCase {
         subject.performSelector(onMainThread: doneButton.action!, with: nil, waitUntilDone: true)
 
         XCTAssert(baseViewController.dismissCalled)
-        XCTAssert(mockPeerNameListViewControllerDelegate.selectedPeer != nil && mockPeerNameListViewControllerDelegate.selectedPeer.equals(peer: testPeer))
+        XCTAssertNotNil(mockPeerNameListViewControllerDelegate.selectedPeer)
+        XCTAssertEqual(mockPeerNameListViewControllerDelegate.selectedPeer!, testPeer)
     }
 }
 
@@ -100,10 +101,10 @@ class MockUIViewController: UIViewController {
     }
 }
 
-class MockPlistDataManager: PListDataManager {
+class MockPeerFeedbackDataManager: PeerFeedbackDataManager {
     var peerNameList: [PeerDetailsModel] = []
     
-    override func fetchPeerNameList(for role: String) -> [PeerDetailsModel] {
+    override func fetchPeersList(with role: Role) -> [PeerDetailsModel] {
         return peerNameList
     }
 }
@@ -113,5 +114,14 @@ class MockPeerNameListViewControllerDelegate: PeerNameListViewControllerDelegate
 
     func peerSelected(peer: PeerDetailsModel) {
         selectedPeer = peer
+    }
+}
+
+extension PeerDetailsModel: Equatable {
+    public static func == (lhs: PeerDetailsModel, rhs: PeerDetailsModel) -> Bool {
+        return lhs.emailId == rhs.emailId
+            && lhs.isValid == rhs.isValid
+            && lhs.peerName == rhs.peerName
+            && lhs.role?.rawValue == rhs.role?.rawValue
     }
 }

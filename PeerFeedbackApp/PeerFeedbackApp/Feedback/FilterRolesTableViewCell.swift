@@ -63,7 +63,7 @@ class FilterRolesTableViewCell: UITableViewCell {
         let selectedIndex = rolesPickerView.selectedRow(inComponent: 0)
         delegate?.chooseRole(from: selectedIndex)
 
-        detailTextLabel?.text = delegate?.roles[selectedIndex]
+        detailTextLabel?.text = delegate?.roles[selectedIndex].displayString()
         resignFirstResponder()
     }
     
@@ -73,7 +73,7 @@ class FilterRolesTableViewCell: UITableViewCell {
 }
 
 protocol FilterRolesCellDelegate: class {
-    var roles: [String] { get }
+    var roles: [Role] { get }
     func chooseRole(from index: Int)
 }
 
@@ -88,6 +88,6 @@ extension FilterRolesTableViewCell: UIPickerViewDelegate, UIPickerViewDataSource
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return delegate?.roles[row]
+        return delegate?.roles[row].displayString()
     }
 }

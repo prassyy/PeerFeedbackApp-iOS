@@ -14,21 +14,20 @@ protocol PeerNameListViewControllerDelegate: class {
 
 class PeerNameListViewController: UIViewController {
 
-    var role: String!
-    var plistDataManager: PListDataManager!
-
+    @IBOutlet weak var peerNameListTableView: UITableView!
+    
+    var role: Role!
+    var peerFeedbackDataManager: PeerFeedbackDataManager!
     var names: [PeerDetailsModel] = []
     weak var delegate: PeerNameListViewControllerDelegate?
-    
-    @IBOutlet weak var peerNameListTableView: UITableView!
     
     override func viewDidLoad() {
         setupTableView()
         fetchNameList(for: role)
     }
 
-    private func fetchNameList(for role: String) {
-        names = plistDataManager.fetchPeerNameList(for: role)
+    private func fetchNameList(for role: Role) {
+        names = peerFeedbackDataManager.fetchPeersList(with: role)
         peerNameListTableView.reloadData()
     }
     
@@ -63,11 +62,6 @@ class PeerNameListViewController: UIViewController {
     @objc private func cancelTapped() {
         self.presentingViewController?.dismiss(animated: true, completion: nil)
     }
-    
-    func setDependencies(role: String, plistDataManager: PListDataManager) {
-        self.role = role
-        self.plistDataManager = plistDataManager
-    }
 }
 
 extension PeerNameListViewController: UITableViewDelegate, UITableViewDataSource {
@@ -88,15 +82,18 @@ extension PeerNameListViewController: UITableViewDelegate, UITableViewDataSource
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-    
 }
 
 extension PeerNameListViewController {
-    
-    class func instantiateFromStoryboard(role: String,
-                                         plistDataManager: PListDataManager = PListDataManager()) -> PeerNameListViewController {
+    class func instantiateFromStoryboard(role: Role,
+                                         peerFeedbackDataManager: PeerFeedbackDataManager = PeerFeedbackDataManager()) -> PeerNameListViewController {
         let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PeerNameListViewController") as! PeerNameListViewController
-        viewController.setDependencies(role: role, plistDataManager: plistDataManager)
+        viewController.setDependencies(role: role, peerFeedbackDataManager: peerFeedbackDataManager)
         return viewController
+    }
+
+    func setDependencies(role: Role, peerFeedbackDataManager: PeerFeedbackDataManager) {
+        self.role = role
+        self.peerFeedbackDataManager = peerFeedbackDataManager
     }
 }

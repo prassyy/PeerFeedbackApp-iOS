@@ -82,8 +82,8 @@ class FeedbackQuestionTableViewCell: UITableViewCell {
     @objc private func doneTapped() {
         let selectedIndex = answerPickerView.selectedRow(inComponent: 0)
         if let question = questionModel,
-           let choices = question.choices,
-           let response = choices[String(selectedIndex)] {
+            let choices = question.choices,
+            let response = choices[String(selectedIndex)] {
             answerChoiceLabel.text = response
             delegate?.selectedResponse(for: questionModel, response: response)
         }

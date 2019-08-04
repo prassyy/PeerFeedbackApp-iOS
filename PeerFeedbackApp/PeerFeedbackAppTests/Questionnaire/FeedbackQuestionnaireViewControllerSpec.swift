@@ -14,12 +14,11 @@ class FeedbackQuestionnaireViewControllerSpec: XCTestCase {
     
     var subject: FeedbackQuestionnaireViewController!
     var testPeer: PeerDetailsModel!
-//    var questions: [FeedbackQuestionModel]!
+    var mockPeerFeedbackDataManager = MockPeerFeedbackDataManager()
     
     override func setUp() {
-        
-        testPeer = PeerDetailsModel(role: "Android Developer", peerName: "Harshith", emailId: "pharshit@ford.com")
-        subject = FeedbackQuestionnaireViewController.instantiateFromStoryboard(peer: testPeer)
+        testPeer = PeerDetailsModel(role: Role(rawValue: "justiceLeague"), peerName: "Harshith", emailId: "pharshit@ford.com")
+        subject = FeedbackQuestionnaireViewController.instantiateFromStoryboard(peer: testPeer, peerFeedbackDataManager: mockPeerFeedbackDataManager)
         _ = subject.view
     }
     
@@ -36,8 +35,6 @@ class FeedbackQuestionnaireViewControllerSpec: XCTestCase {
         tableView?.reloadData()
         
         XCTAssertEqual(tableView?.numberOfSections, 1)
-        XCTAssertEqual(tableView?.numberOfRows(inSection: 0), 10)
+        XCTAssertEqual(tableView?.numberOfRows(inSection: 0), 4)
     }
-    
-    
 }

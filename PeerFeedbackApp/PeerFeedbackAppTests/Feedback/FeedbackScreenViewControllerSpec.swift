@@ -115,11 +115,11 @@ class FeedbackScreenViewControllerSpec: XCTestCase {
 
         //Then it should update the role in the selection cell
         let filterRoleCell = tableView.cellForRow(at: IndexPath(item: 0, section: 0))
-        XCTAssertEqual(filterRoleCell!.detailTextLabel!.text, "Project Manager")
+        XCTAssertEqual(filterRoleCell!.detailTextLabel!.text, "Pokémon")
     }
     
     func test_selectingAPeerFromNameListShouldDisplayTheNameInChoosePeerCell() {
-        let testPeer = PeerDetailsModel(role: "Android Developer", peerName: "Harshith", emailId: "pharshit@ford.com")
+        let testPeer = PeerDetailsModel(role: Role(rawValue: "avengers"), peerName: "Harshith", emailId: "pharshit@ford.com")
         let tableView = subject.view.getViewsOfType(UITableView.self).first!
         tableView.reloadData()
 
@@ -127,7 +127,7 @@ class FeedbackScreenViewControllerSpec: XCTestCase {
         subject.peerSelected(peer: testPeer)
 
         let filterRoleCell = tableView.cellForRow(at: IndexPath(row: 0, section: 0))!
-        XCTAssertEqual(filterRoleCell.detailTextLabel?.text, testPeer.role)
+        XCTAssertEqual(filterRoleCell.detailTextLabel?.text, testPeer.role?.displayString())
         
         let choosePeerCell = tableView.cellForRow(at: IndexPath(row: 0, section: 1))!
         XCTAssertEqual(choosePeerCell.detailTextLabel!.text, testPeer.peerName)
@@ -146,7 +146,7 @@ class FeedbackScreenViewControllerSpec: XCTestCase {
     }
     
     func test_tappingNextButtonShouldNavigateToFeedbackQuestionnaire() {
-        let testPeer = PeerDetailsModel(role: "Android Developer", peerName: "Harshith", emailId: "pharshit@ford.com")
+        let testPeer = PeerDetailsModel(role: Role(rawValue: "justiceLeague"), peerName: "Harshith", emailId: "pharshit@ford.com")
         let tableView = subject.view.getViewsOfType(UITableView.self).first!
         tableView.reloadData()
         
@@ -173,7 +173,7 @@ class FeedbackScreenViewControllerSpec: XCTestCase {
     }
     
     func test_afterChoosingAPeerWhenRoleIsChangedShouldResetThePeerName() {
-        let testPeer = PeerDetailsModel(role: "Android Developer", peerName: "Harshith", emailId: "pharshit@ford.com")
+        let testPeer = PeerDetailsModel(role: Role(rawValue: "pokemon"), peerName: "Harshith", emailId: "pharshit@ford.com")
         
         let tableView = subject.view.getViewsOfType(UITableView.self).first!
         tableView.reloadData()

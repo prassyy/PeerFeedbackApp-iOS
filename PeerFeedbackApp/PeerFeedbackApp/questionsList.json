@@ -1,0 +1,118 @@
+{
+    "list": [
+        {
+            "id": 0,
+            "question": "How would you rate your Pokemon during duels on obedience?",
+            "isChoiceBased": true,
+            "choices": {
+                "0": "Disobedient to the core!",
+                "1": "Somewhat Naughty",
+                "2": "Satisfactory",
+                "3": "He is my champion"
+            },
+            "role": "pokemon"
+        },
+        {
+            "id": 1,
+            "question": "How well would you rate your Pokemon on attacks front?",
+            "isChoiceBased": true,
+            "choices": {
+                "0": "Dissatisfied",
+                "1": "Somewhat Satisfied",
+                "2": "Good",
+                "3": "Excellent!"
+            },
+            "role": "pokemon"
+        },
+        {
+            "id": 2,
+            "question": "Overall how would you describe your Pokemon!",
+            "isChoiceBased": false,
+            "choices": {},
+            "role": "pokemon"
+        },
+        {
+            "id": 3,
+            "question": "What are the things that you would want your Pokemon to improve?",
+            "isChoiceBased": false,
+            "choices": {},
+            "role": "pokemon"
+        },
+        {
+            "id": 4,
+            "question": "Can he/she lift Mjolnir?",
+            "isChoiceBased": true,
+            "choices": {
+                "0": "Don't even count on it!",
+                "1": "Probably in due time",
+                "2": "Absolutely"
+            },
+            "role": "avengers"
+        },
+        {
+            "id": 5,
+            "question": "How much does he/she fit in the geek club?",
+            "isChoiceBased": true,
+            "choices": {
+                "0": "Totally!",
+                "1": "He/She tries hard to fit in",
+                "2": "Not so much junk upstairs"
+            },
+            "role": "avengers"
+        },
+        {
+            "id": 6,
+            "question": "What are the things that you would want this Avenger to improve?",
+            "isChoiceBased": false,
+            "choices": {},
+            "role": "avengers"
+        },
+        {
+            "id": 7,
+            "question": "Overall how would you describe your Avenger!",
+            "isChoiceBased": false,
+            "choices": {},
+            "role": "avengers"
+        },
+        {
+            "id": 8,
+            "question": "From Superman to Batman, how fast is he/she?",
+            "isChoiceBased": true,
+            "choices": {
+                "0": "Superman",
+                "1": "Flash",
+                "2": "Wonder-woman",
+                "3": "Cyborg",
+                "4": "Aquaman",
+                "5": "Batman"
+            },
+            "role": "justiceLeague"
+        },
+        {
+            "id": 9,
+            "question": "How good was his/her intro movie?",
+            "isChoiceBased": true,
+            "choices": {
+                "0": "Dissatisfied",
+                "1": "Somewhat Satisfied",
+                "2": "Good",
+                "3": "Excellent!"
+            },
+            "role": "justiceLeague"
+        },
+        {
+            "id": 10,
+            "question": "What are the things that you would want him/her to improve?",
+            "isChoiceBased": false,
+            "choices": {},
+            "role": "justiceLeague"
+        },
+        {
+            "id": 11,
+            "question": "Overall how would you describe him/her!",
+            "isChoiceBased": false,
+            "choices": {},
+            "role": "justiceLeague"
+        }
+    ]
+}

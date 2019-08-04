@@ -10,7 +10,7 @@ import UIKit
 
 class FeedbackQuestionnaireViewController: UIViewController {
     var peerModel: PeerDetailsModel!
-    var dataManager: PListDataManager!
+    var dataManager: PeerFeedbackDataManager!
     var questions: [FeedbackQuestionModel] = []
 
     var responses: Dictionary<Int, String> = Dictionary<Int, String>() {
@@ -39,11 +39,6 @@ class FeedbackQuestionnaireViewController: UIViewController {
         }
         return FooterView()
     }()
-    
-    func setDependencies(peer: PeerDetailsModel, plistDataManager: PListDataManager) {
-        peerModel = peer
-        dataManager = plistDataManager
-    }
     
     private func setupTitle() {
         if let peerName = peerModel.peerName {
@@ -107,10 +102,15 @@ extension FeedbackQuestionnaireViewController: UITableViewDataSource, UITableVie
 
 extension FeedbackQuestionnaireViewController {
     class func instantiateFromStoryboard(peer: PeerDetailsModel,
-                                         plistDataManager: PListDataManager = PListDataManager()) -> FeedbackQuestionnaireViewController {
+                                         peerFeedbackDataManager: PeerFeedbackDataManager = PeerFeedbackDataManager()) -> FeedbackQuestionnaireViewController {
         let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FeedbackQuestionnaireViewController") as! FeedbackQuestionnaireViewController
-        viewController.setDependencies(peer: peer, plistDataManager: plistDataManager)
+        viewController.setDependencies(peer: peer, peerFeedbackDataManager: peerFeedbackDataManager)
         return viewController
+    }
+    
+    func setDependencies(peer: PeerDetailsModel, peerFeedbackDataManager: PeerFeedbackDataManager) {
+        peerModel = peer
+        dataManager = peerFeedbackDataManager
     }
 }
 

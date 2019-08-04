@@ -1,0 +1,34 @@
+{
+    "list": [
+        {
+            "peerName": "Pikachu",
+            "role": "pokemon",
+            "emailId": "sparkles@pokemon.com"
+        },
+        {
+            "peerName": "Charmander",
+            "role": "pokemon",
+            "emailId": "flame@pokemon.com"
+        },
+        {
+            "peerName": "Spiderman",
+            "role": "avengers",
+            "emailId": "parker@avengers.com"
+        },
+        {
+            "peerName": "Ironman",
+            "role": "avengers",
+            "emailId": "imironman@avengers.com"
+        },
+        {
+            "peerName": "Aquaman",
+            "role": "justiceLeague",
+            "emailId": "redheads@league.com"
+        },
+        {
+            "peerName": "Superman",
+            "role": "justiceLeague",
+            "emailId": "itmeanshope@league.com"
+        }
+    ]
+}

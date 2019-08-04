@@ -16,33 +16,21 @@ enum Section: Int {
 class FeedbackScreenViewController: UIViewController {
     private var peerDetailsModel = PeerDetailsModel() {
         didSet {
-            if peerDetailsModel.role.exists,
-                peerDetailsModel.peerName.exists,
-                peerDetailsModel.emailId.exists {
+            if peerDetailsModel.isValid {
                 footerView.setButtonEnabled(isEnabled: true)
             } else {
                 footerView.setButtonEnabled(isEnabled: false)
             }
+            feedbackTableView.reloadData()
         }
     }
 
     @IBOutlet weak var feedbackTableView: UITableView!
     
-    lazy var headerView: UIView? = {
-        let nib = UINib(nibName: "TitleView", bundle: Bundle(for: type(of: self)))
-        let viewsList = nib.instantiate(withOwner: self, options: nil)
-        if viewsList.count > 0,
-            let headerView = viewsList[0] as? UIView {
-            return headerView
-        }
-        return nil
-    }()
+    lazy var headerView: UIView? = UINib(nibName: "TitleView", bundle: Bundle(for: type(of: self))).toView(owner: self)
     
     lazy var footerView: FooterView = {
-        let nib = UINib(nibName: "FooterView", bundle: nil)
-        let viewsList = nib.instantiate(withOwner: self, options: nil)
-        if viewsList.count > 0,
-            let footerView = viewsList[0] as? FooterView {
+        if let footerView: FooterView = UINib(nibName: "FooterView", bundle: nil).toView(owner: self) {
             footerView.footerButton.setTitle("Next", for: .normal)
             footerView.setButtonEnabled(isEnabled: false)
             footerView.footerButton.addTarget(self, action: #selector(nextAction), for: .touchUpInside)
@@ -67,7 +55,7 @@ class FeedbackScreenViewController: UIViewController {
         if let cell = cell as? FilterRolesTableViewCell {
             cell.delegate = self
             cell.textLabel?.text = "Role"
-            cell.detailTextLabel?.text = peerDetailsModel.role ?? "Choose"
+            cell.detailTextLabel?.text = peerDetailsModel.role?.displayString() ?? "Choose"
         }
         return cell
     }
@@ -80,13 +68,10 @@ class FeedbackScreenViewController: UIViewController {
     }
     
     @objc func nextAction() {
-        guard peerDetailsModel.role.exists,
-            peerDetailsModel.peerName.exists,
-            peerDetailsModel.emailId.exists else { return }
+        guard peerDetailsModel.isValid else { return }
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        self.navigationController?.pushViewController(FeedbackQuestionnaireViewController
-            .instantiateFromStoryboard(peer: peerDetailsModel),
-                                                      animated: true)
+        let vc = FeedbackQuestionnaireViewController.instantiateFromStoryboard(peer: peerDetailsModel)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
@@ -116,7 +101,6 @@ extension FeedbackScreenViewController: UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         guard let section = Section(rawValue: section) else { return "" }
-
         switch section {
         case .chooseRole:
             return "Choose the role of your Peer"
@@ -132,23 +116,16 @@ extension FeedbackScreenViewController: UITableViewDelegate, UITableViewDataSour
 
 extension FeedbackScreenViewController: FilterRolesCellDelegate {
     func chooseRole(from index: Int) {
-        peerDetailsModel.role = roles[index]
-        peerDetailsModel.peerName = nil
-        peerDetailsModel.emailId = nil
-
-        feedbackTableView.reloadData()
+        peerDetailsModel = PeerDetailsModel(role: roles[index], peerName: nil, emailId: nil)
     }
 
-    var roles: [String] {
-        return ["Project Manager","Android Developer","iOS Developer"]
+    var roles: [Role] {
+        return [.pokemon, .avengers, .justiceLeague]
     }
 }
 
 extension FeedbackScreenViewController: PeerNameListViewControllerDelegate {
     func peerSelected(peer: PeerDetailsModel) {
-        peerDetailsModel.peerName = peer.peerName
-        peerDetailsModel.emailId = peer.emailId
-        
-        feedbackTableView.reloadData()
+        peerDetailsModel = peer
     }
 }

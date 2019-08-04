@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3321049022F6C8FE0041EA6F /* UINib+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3321048F22F6C8FE0041EA6F /* UINib+Extension.swift */; };
+		3321049222F6D63D0041EA6F /* PeerFeedbackDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3321049122F6D63D0041EA6F /* PeerFeedbackDataManager.swift */; };
+		3321049422F6DD180041EA6F /* JsonFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3321049322F6DD180041EA6F /* JsonFileManager.swift */; };
+		3321049722F6DEB80041EA6F /* PeerListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3321049622F6DEB80041EA6F /* PeerListModel.swift */; };
+		3321049922F6F7830041EA6F /* FeedbackQuestionListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3321049822F6F7830041EA6F /* FeedbackQuestionListModel.swift */; };
+		3321049B22F6FA240041EA6F /* peersList.json in Resources */ = {isa = PBXBuildFile; fileRef = 3321049A22F6FA240041EA6F /* peersList.json */; };
+		332106EE22F739BE0041EA6F /* questionsList.json in Resources */ = {isa = PBXBuildFile; fileRef = 332106ED22F739BE0041EA6F /* questionsList.json */; };
 		332E24692185D9F100D139C6 /* FooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332E24682185D9F100D139C6 /* FooterView.swift */; };
 		3343FE612157A520009C516F /* PeerNameListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3343FE602157A520009C516F /* PeerNameListViewController.swift */; };
 		3343FF9B2157CD36009C516F /* MockNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3343FF9A2157CD36009C516F /* MockNavigationController.swift */; };
@@ -16,8 +23,6 @@
 		33BDD8BE215C0BF3007EF344 /* Optional+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BDD8BD215C0BF3007EF344 /* Optional+Extension.swift */; };
 		33BDD8C1215C1699007EF344 /* FeedbackQuestionnaireViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BDD8C0215C1699007EF344 /* FeedbackQuestionnaireViewControllerSpec.swift */; };
 		33C2C50421879B6A00F26D9B /* questions.plist in Resources */ = {isa = PBXBuildFile; fileRef = 33C2C50321879B6A00F26D9B /* questions.plist */; };
-		33CD684D21593A6E0031ADEA /* PListDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33CD684C21593A6E0031ADEA /* PListDataManager.swift */; };
-		33CD684F21593AAE0031ADEA /* PListDataManagerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33CD684E21593AAE0031ADEA /* PListDataManagerSpec.swift */; };
 		33CD6851215944960031ADEA /* peerNames.plist in Resources */ = {isa = PBXBuildFile; fileRef = 33CD6850215944960031ADEA /* peerNames.plist */; };
 		33D677AA215AB29300599FB4 /* FeedbackQuestionnaireViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33D677A9215AB29300599FB4 /* FeedbackQuestionnaireViewController.swift */; };
 		33E890322146D4E800D627C1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E890312146D4E800D627C1 /* AppDelegate.swift */; };
@@ -30,12 +35,10 @@
 		33F5EA132182512B002E3DC9 /* FeedbackQuestionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 33F5EA122182512B002E3DC9 /* FeedbackQuestionTableViewCell.xib */; };
 		6112F6E721673B86005B6FC9 /* FeedbackQuestionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6112F6E621673B86005B6FC9 /* FeedbackQuestionModel.swift */; };
 		6125E0CC214F8F860098A381 /* FilterRolesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6125E0CB214F8F860098A381 /* FilterRolesTableViewCell.swift */; };
-		61360BB32158F278003BAACA /* peerNames.plist in Resources */ = {isa = PBXBuildFile; fileRef = 61360BB22158F278003BAACA /* peerNames.plist */; };
 		61360BB521591488003BAACA /* PeerDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61360BB421591488003BAACA /* PeerDetailsModel.swift */; };
 		618CB2F621883B4D0057D60C /* MailService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618CB2F521883B4D0057D60C /* MailService.swift */; };
 		618CB2F821883B5E0057D60C /* MailServiceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618CB2F721883B5E0057D60C /* MailServiceSpec.swift */; };
 		61B9250621478C480021CE71 /* TitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61B9250521478C480021CE71 /* TitleView.xib */; };
-		61F7DB1C2182DCFC00186C29 /* questions.plist in Resources */ = {isa = PBXBuildFile; fileRef = 61F7DB1B2182DCFC00186C29 /* questions.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +52,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3321048F22F6C8FE0041EA6F /* UINib+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINib+Extension.swift"; sourceTree = "<group>"; };
+		3321049122F6D63D0041EA6F /* PeerFeedbackDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeerFeedbackDataManager.swift; sourceTree = "<group>"; };
+		3321049322F6DD180041EA6F /* JsonFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonFileManager.swift; sourceTree = "<group>"; };
+		3321049622F6DEB80041EA6F /* PeerListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeerListModel.swift; sourceTree = "<group>"; };
+		3321049822F6F7830041EA6F /* FeedbackQuestionListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackQuestionListModel.swift; sourceTree = "<group>"; };
+		3321049A22F6FA240041EA6F /* peersList.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = peersList.json; sourceTree = "<group>"; };
+		332106ED22F739BE0041EA6F /* questionsList.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = questionsList.json; sourceTree = "<group>"; };
 		332E24682185D9F100D139C6 /* FooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterView.swift; sourceTree = "<group>"; };
 		3343FE602157A520009C516F /* PeerNameListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeerNameListViewController.swift; sourceTree = "<group>"; };
 		3343FF9A2157CD36009C516F /* MockNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNavigationController.swift; sourceTree = "<group>"; };
@@ -58,8 +68,6 @@
 		33BDD8BD215C0BF3007EF344 /* Optional+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Optional+Extension.swift"; sourceTree = "<group>"; };
 		33BDD8C0215C1699007EF344 /* FeedbackQuestionnaireViewControllerSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackQuestionnaireViewControllerSpec.swift; sourceTree = "<group>"; };
 		33C2C50321879B6A00F26D9B /* questions.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = questions.plist; sourceTree = "<group>"; };
-		33CD684C21593A6E0031ADEA /* PListDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PListDataManager.swift; sourceTree = "<group>"; };
-		33CD684E21593AAE0031ADEA /* PListDataManagerSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PListDataManagerSpec.swift; sourceTree = "<group>"; };
 		33CD6850215944960031ADEA /* peerNames.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = peerNames.plist; sourceTree = "<group>"; };
 		33D677A9215AB29300599FB4 /* FeedbackQuestionnaireViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackQuestionnaireViewController.swift; sourceTree = "<group>"; };
 		33E8902E2146D4E800D627C1 /* PeerFeedbackApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PeerFeedbackApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -76,12 +84,10 @@
 		33F5EA122182512B002E3DC9 /* FeedbackQuestionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedbackQuestionTableViewCell.xib; sourceTree = "<group>"; };
 		6112F6E621673B86005B6FC9 /* FeedbackQuestionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackQuestionModel.swift; sourceTree = "<group>"; };
 		6125E0CB214F8F860098A381 /* FilterRolesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterRolesTableViewCell.swift; sourceTree = "<group>"; };
-		61360BB22158F278003BAACA /* peerNames.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = peerNames.plist; sourceTree = "<group>"; };
 		61360BB421591488003BAACA /* PeerDetailsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeerDetailsModel.swift; sourceTree = "<group>"; };
 		618CB2F521883B4D0057D60C /* MailService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailService.swift; sourceTree = "<group>"; };
 		618CB2F721883B5E0057D60C /* MailServiceSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailServiceSpec.swift; sourceTree = "<group>"; };
 		61B9250521478C480021CE71 /* TitleView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TitleView.xib; sourceTree = "<group>"; };
-		61F7DB1B2182DCFC00186C29 /* questions.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = questions.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,11 +108,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3321048E22F6C8EB0041EA6F /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				33BDD8BD215C0BF3007EF344 /* Optional+Extension.swift */,
+				3321048F22F6C8FE0041EA6F /* UINib+Extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		3321049522F6DEAA0041EA6F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				3321049622F6DEB80041EA6F /* PeerListModel.swift */,
+				61360BB421591488003BAACA /* PeerDetailsModel.swift */,
+				3321049822F6F7830041EA6F /* FeedbackQuestionListModel.swift */,
+				6112F6E621673B86005B6FC9 /* FeedbackQuestionModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		3343FE5F2157A50D009C516F /* Peer List View */ = {
 			isa = PBXGroup;
 			children = (
 				3343FE602157A520009C516F /* PeerNameListViewController.swift */,
-				61360BB22158F278003BAACA /* peerNames.plist */,
 			);
 			path = "Peer List View";
 			sourceTree = "<group>";
@@ -128,14 +153,6 @@
 			path = "Peer List View";
 			sourceTree = "<group>";
 		};
-		33BDD8BC215C0BD1007EF344 /* Utilities */ = {
-			isa = PBXGroup;
-			children = (
-				33BDD8BD215C0BF3007EF344 /* Optional+Extension.swift */,
-			);
-			path = Utilities;
-			sourceTree = "<group>";
-		};
 		33BDD8BF215C167E007EF344 /* Questionnaire */ = {
 			isa = PBXGroup;
 			children = (
@@ -150,7 +167,6 @@
 				33D677A9215AB29300599FB4 /* FeedbackQuestionnaireViewController.swift */,
 				33F5EA1021824C7D002E3DC9 /* FeedbackQuestionTableViewCell.swift */,
 				33F5EA122182512B002E3DC9 /* FeedbackQuestionTableViewCell.xib */,
-				61F7DB1B2182DCFC00186C29 /* questions.plist */,
 			);
 			path = Questionnaire;
 			sourceTree = "<group>";
@@ -176,12 +192,11 @@
 		33E890302146D4E800D627C1 /* PeerFeedbackApp */ = {
 			isa = PBXGroup;
 			children = (
-				618CB2F321883B340057D60C /* Models */,
+				3321049522F6DEAA0041EA6F /* Models */,
+				3321049322F6DD180041EA6F /* JsonFileManager.swift */,
+				3321048E22F6C8EB0041EA6F /* Extensions */,
 				618CB2F221883B240057D60C /* Service */,
-				33BDD8BC215C0BD1007EF344 /* Utilities */,
 				33E890352146D4E800D627C1 /* Main.storyboard */,
-				61360BB421591488003BAACA /* PeerDetailsModel.swift */,
-				33CD684C21593A6E0031ADEA /* PListDataManager.swift */,
 				33BDD8BA215C049D007EF344 /* FooterView.xib */,
 				332E24682185D9F100D139C6 /* FooterView.swift */,
 				33D677A8215AB27B00599FB4 /* Questionnaire */,
@@ -191,7 +206,9 @@
 				33E890382146D4E900D627C1 /* Assets.xcassets */,
 				33E8903A2146D4E900D627C1 /* LaunchScreen.storyboard */,
 				33E8903D2146D4E900D627C1 /* Info.plist */,
-				6112F6E621673B86005B6FC9 /* FeedbackQuestionModel.swift */,
+				3321049122F6D63D0041EA6F /* PeerFeedbackDataManager.swift */,
+				3321049A22F6FA240041EA6F /* peersList.json */,
+				332106ED22F739BE0041EA6F /* questionsList.json */,
 			);
 			path = PeerFeedbackApp;
 			sourceTree = "<group>";
@@ -205,7 +222,6 @@
 				3343FF992157CD1E009C516F /* Utilities */,
 				33E890562146DBDD00D627C1 /* Feedback */,
 				33E890482146D4EA00D627C1 /* Info.plist */,
-				33CD684E21593AAE0031ADEA /* PListDataManagerSpec.swift */,
 				33CD6850215944960031ADEA /* peerNames.plist */,
 				33C2C50321879B6A00F26D9B /* questions.plist */,
 			);
@@ -236,13 +252,6 @@
 				618CB2F521883B4D0057D60C /* MailService.swift */,
 			);
 			path = Service;
-			sourceTree = "<group>";
-		};
-		618CB2F321883B340057D60C /* Models */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		618CB2F421883B410057D60C /* Service */ = {
@@ -336,10 +345,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				33E8903C2146D4E900D627C1 /* LaunchScreen.storyboard in Resources */,
+				332106EE22F739BE0041EA6F /* questionsList.json in Resources */,
 				33BDD8BB215C049D007EF344 /* FooterView.xib in Resources */,
-				61360BB32158F278003BAACA /* peerNames.plist in Resources */,
+				3321049B22F6FA240041EA6F /* peersList.json in Resources */,
 				33E890392146D4E900D627C1 /* Assets.xcassets in Resources */,
-				61F7DB1C2182DCFC00186C29 /* questions.plist in Resources */,
 				61B9250621478C480021CE71 /* TitleView.xib in Resources */,
 				33F5EA132182512B002E3DC9 /* FeedbackQuestionTableViewCell.xib in Resources */,
 				33E890372146D4E800D627C1 /* Main.storyboard in Resources */,
@@ -364,16 +373,20 @@
 			files = (
 				618CB2F621883B4D0057D60C /* MailService.swift in Sources */,
 				6112F6E721673B86005B6FC9 /* FeedbackQuestionModel.swift in Sources */,
-				33CD684D21593A6E0031ADEA /* PListDataManager.swift in Sources */,
 				33BDD8BE215C0BF3007EF344 /* Optional+Extension.swift in Sources */,
 				3343FE612157A520009C516F /* PeerNameListViewController.swift in Sources */,
+				3321049922F6F7830041EA6F /* FeedbackQuestionListModel.swift in Sources */,
 				33D677AA215AB29300599FB4 /* FeedbackQuestionnaireViewController.swift in Sources */,
 				61360BB521591488003BAACA /* PeerDetailsModel.swift in Sources */,
+				3321049722F6DEB80041EA6F /* PeerListModel.swift in Sources */,
 				332E24692185D9F100D139C6 /* FooterView.swift in Sources */,
+				3321049022F6C8FE0041EA6F /* UINib+Extension.swift in Sources */,
 				33E890322146D4E800D627C1 /* AppDelegate.swift in Sources */,
 				33E890522146D52900D627C1 /* FeedbackScreenViewController.swift in Sources */,
 				33F5EA1121824C7D002E3DC9 /* FeedbackQuestionTableViewCell.swift in Sources */,
+				3321049422F6DD180041EA6F /* JsonFileManager.swift in Sources */,
 				6125E0CC214F8F860098A381 /* FilterRolesTableViewCell.swift in Sources */,
+				3321049222F6D63D0041EA6F /* PeerFeedbackDataManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -386,7 +399,6 @@
 				3343FF9D2157CD79009C516F /* UIView+Spec.swift in Sources */,
 				33BDD8C1215C1699007EF344 /* FeedbackQuestionnaireViewControllerSpec.swift in Sources */,
 				3343FFA02157D278009C516F /* PeerNameListViewControllerSpec.swift in Sources */,
-				33CD684F21593AAE0031ADEA /* PListDataManagerSpec.swift in Sources */,
 				3343FF9B2157CD36009C516F /* MockNavigationController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
