@@ -55,7 +55,9 @@ class FeedbackQuestionnaireViewController: UIViewController {
     }
     
     @objc func submitButtonTapped() {
-        //
+        dataManager.sendResponse(for: peerModel, questions: questions, responses: responses) { (result) in
+            
+        }
     }
     
     private func fetchQuestions() {

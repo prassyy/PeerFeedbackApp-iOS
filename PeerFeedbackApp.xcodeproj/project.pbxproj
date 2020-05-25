@@ -15,6 +15,11 @@
 		3321049B22F6FA240041EA6F /* peersList.json in Resources */ = {isa = PBXBuildFile; fileRef = 3321049A22F6FA240041EA6F /* peersList.json */; };
 		332106EE22F739BE0041EA6F /* questionsList.json in Resources */ = {isa = PBXBuildFile; fileRef = 332106ED22F739BE0041EA6F /* questionsList.json */; };
 		332E24692185D9F100D139C6 /* FooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332E24682185D9F100D139C6 /* FooterView.swift */; };
+		3333C230247C0CF8007A77E9 /* MailRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3333C22F247C0CF8007A77E9 /* MailRequestModel.swift */; };
+		3333C232247C1524007A77E9 /* PeerFeedbackDataManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3333C231247C1524007A77E9 /* PeerFeedbackDataManagerTests.swift */; };
+		3333C233247C1760007A77E9 /* peersList.json in Resources */ = {isa = PBXBuildFile; fileRef = 3321049A22F6FA240041EA6F /* peersList.json */; };
+		3333C234247C1763007A77E9 /* questionsList.json in Resources */ = {isa = PBXBuildFile; fileRef = 332106ED22F739BE0041EA6F /* questionsList.json */; };
+		3333C236247C1F19007A77E9 /* SampleMailClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3333C235247C1F19007A77E9 /* SampleMailClient.swift */; };
 		3343FE612157A520009C516F /* PeerNameListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3343FE602157A520009C516F /* PeerNameListViewController.swift */; };
 		3343FF9B2157CD36009C516F /* MockNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3343FF9A2157CD36009C516F /* MockNavigationController.swift */; };
 		3343FF9D2157CD79009C516F /* UIView+Spec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3343FF9C2157CD79009C516F /* UIView+Spec.swift */; };
@@ -22,8 +27,6 @@
 		33BDD8BB215C049D007EF344 /* FooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 33BDD8BA215C049D007EF344 /* FooterView.xib */; };
 		33BDD8BE215C0BF3007EF344 /* Optional+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BDD8BD215C0BF3007EF344 /* Optional+Extension.swift */; };
 		33BDD8C1215C1699007EF344 /* FeedbackQuestionnaireViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BDD8C0215C1699007EF344 /* FeedbackQuestionnaireViewControllerSpec.swift */; };
-		33C2C50421879B6A00F26D9B /* questions.plist in Resources */ = {isa = PBXBuildFile; fileRef = 33C2C50321879B6A00F26D9B /* questions.plist */; };
-		33CD6851215944960031ADEA /* peerNames.plist in Resources */ = {isa = PBXBuildFile; fileRef = 33CD6850215944960031ADEA /* peerNames.plist */; };
 		33D677AA215AB29300599FB4 /* FeedbackQuestionnaireViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33D677A9215AB29300599FB4 /* FeedbackQuestionnaireViewController.swift */; };
 		33E890322146D4E800D627C1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E890312146D4E800D627C1 /* AppDelegate.swift */; };
 		33E890372146D4E800D627C1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33E890352146D4E800D627C1 /* Main.storyboard */; };
@@ -60,6 +63,9 @@
 		3321049A22F6FA240041EA6F /* peersList.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = peersList.json; sourceTree = "<group>"; };
 		332106ED22F739BE0041EA6F /* questionsList.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = questionsList.json; sourceTree = "<group>"; };
 		332E24682185D9F100D139C6 /* FooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterView.swift; sourceTree = "<group>"; };
+		3333C22F247C0CF8007A77E9 /* MailRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailRequestModel.swift; sourceTree = "<group>"; };
+		3333C231247C1524007A77E9 /* PeerFeedbackDataManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeerFeedbackDataManagerTests.swift; sourceTree = "<group>"; };
+		3333C235247C1F19007A77E9 /* SampleMailClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleMailClient.swift; sourceTree = "<group>"; };
 		3343FE602157A520009C516F /* PeerNameListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeerNameListViewController.swift; sourceTree = "<group>"; };
 		3343FF9A2157CD36009C516F /* MockNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNavigationController.swift; sourceTree = "<group>"; };
 		3343FF9C2157CD79009C516F /* UIView+Spec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Spec.swift"; sourceTree = "<group>"; };
@@ -67,8 +73,6 @@
 		33BDD8BA215C049D007EF344 /* FooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FooterView.xib; sourceTree = "<group>"; };
 		33BDD8BD215C0BF3007EF344 /* Optional+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Optional+Extension.swift"; sourceTree = "<group>"; };
 		33BDD8C0215C1699007EF344 /* FeedbackQuestionnaireViewControllerSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackQuestionnaireViewControllerSpec.swift; sourceTree = "<group>"; };
-		33C2C50321879B6A00F26D9B /* questions.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = questions.plist; sourceTree = "<group>"; };
-		33CD6850215944960031ADEA /* peerNames.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = peerNames.plist; sourceTree = "<group>"; };
 		33D677A9215AB29300599FB4 /* FeedbackQuestionnaireViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackQuestionnaireViewController.swift; sourceTree = "<group>"; };
 		33E8902E2146D4E800D627C1 /* PeerFeedbackApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PeerFeedbackApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		33E890312146D4E800D627C1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -124,6 +128,7 @@
 				61360BB421591488003BAACA /* PeerDetailsModel.swift */,
 				3321049822F6F7830041EA6F /* FeedbackQuestionListModel.swift */,
 				6112F6E621673B86005B6FC9 /* FeedbackQuestionModel.swift */,
+				3333C22F247C0CF8007A77E9 /* MailRequestModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -222,8 +227,7 @@
 				3343FF992157CD1E009C516F /* Utilities */,
 				33E890562146DBDD00D627C1 /* Feedback */,
 				33E890482146D4EA00D627C1 /* Info.plist */,
-				33CD6850215944960031ADEA /* peerNames.plist */,
-				33C2C50321879B6A00F26D9B /* questions.plist */,
+				3333C231247C1524007A77E9 /* PeerFeedbackDataManagerTests.swift */,
 			);
 			path = PeerFeedbackAppTests;
 			sourceTree = "<group>";
@@ -250,6 +254,7 @@
 			isa = PBXGroup;
 			children = (
 				618CB2F521883B4D0057D60C /* MailService.swift */,
+				3333C235247C1F19007A77E9 /* SampleMailClient.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -359,8 +364,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				33C2C50421879B6A00F26D9B /* questions.plist in Resources */,
-				33CD6851215944960031ADEA /* peerNames.plist in Resources */,
+				3333C233247C1760007A77E9 /* peersList.json in Resources */,
+				3333C234247C1763007A77E9 /* questionsList.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -378,7 +383,9 @@
 				3321049922F6F7830041EA6F /* FeedbackQuestionListModel.swift in Sources */,
 				33D677AA215AB29300599FB4 /* FeedbackQuestionnaireViewController.swift in Sources */,
 				61360BB521591488003BAACA /* PeerDetailsModel.swift in Sources */,
+				3333C236247C1F19007A77E9 /* SampleMailClient.swift in Sources */,
 				3321049722F6DEB80041EA6F /* PeerListModel.swift in Sources */,
+				3333C230247C0CF8007A77E9 /* MailRequestModel.swift in Sources */,
 				332E24692185D9F100D139C6 /* FooterView.swift in Sources */,
 				3321049022F6C8FE0041EA6F /* UINib+Extension.swift in Sources */,
 				33E890322146D4E800D627C1 /* AppDelegate.swift in Sources */,
@@ -394,6 +401,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3333C232247C1524007A77E9 /* PeerFeedbackDataManagerTests.swift in Sources */,
 				33E890542146D54000D627C1 /* FeedbackScreenViewControllerSpec.swift in Sources */,
 				618CB2F821883B5E0057D60C /* MailServiceSpec.swift in Sources */,
 				3343FF9D2157CD79009C516F /* UIView+Spec.swift in Sources */,

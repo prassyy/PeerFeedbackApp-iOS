@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct FeedbackQuestionModel: Decodable {
+struct FeedbackQuestionModel: Decodable, Equatable {
     var id: Int?
     var question: String?
     var isChoiceBased: Bool?
